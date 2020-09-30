@@ -9,8 +9,8 @@ view: stores_core {
   sql_table_name: @{SCHEMA_NAME}.@{STORES_TABLE_NAME} ;;
 
   dimension: id {
+    type: string
     primary_key: yes
-    type: number
     sql: ${TABLE}.ID ;;
   }
 
@@ -36,39 +36,6 @@ view: stores_core {
       url: "/dashboards/WQKf302aPo8IEFvc2EkSQP?Date={{ _filters['transactions.date_comparison_filter'] | url_encode }}&Store={{value | encode_uri}}"
       label: "Drill down into {{rendered_value}}"
     }
-    link: {
-      url: "https://looker-retail-demo-1.appspot.com/api/contactStoreManager?store={{value | encode_uri}}"
-      label: "Text/Call {{rendered_value}} Store Manager via Google App Engine"
-      icon_url: "https://cdn.iconscout.com/icon/free/png-256/twilio-282195.png"
-    }
-#     action: {
-#       label: "Text/Call {{rendered_value}} Store Manager"
-#       icon_url: "https://cdn.iconscout.com/icon/free/png-256/twilio-282195.png"
-#       url: "https://looker-retail-demo-1.appspot.com/api/contactStoreManager?store={{value | encode_uri}}"
-#       param: {
-#         name: "store"
-#         value: "{{value | encode_uri}}"
-#       }
-#       form_param: {
-#         name: "message"
-#         type: textarea
-#         label: "Message"
-#         required: yes
-#         default: "Hi, can you please check out what's going on in {{rendered_value}}? /dashboards/WQKf302aPo8IEFvc2EkSQP?Store={{value | encode_uri}}"
-#       }
-#     }
-  }
-
-  dimension: state {
-    type: string
-    group_label: "Store Info"
-    sql: ${TABLE}.State ;;
-  }
-
-  dimension: sq_ft {
-    type: string
-    group_label: "Store Info"
-    sql: ${TABLE}.sq_ft ;;
   }
 
   ##### DERIVED DIMENSIONS #####
@@ -78,29 +45,6 @@ view: stores_core {
     group_label: "Store Info"
     sql_latitude: ${latitude} ;;
     sql_longitude: ${longitude} ;;
-  }
-
-  dimension: store_size_grouping {
-    type: string
-    sql: CASE
-      WHEN ${sq_ft} <= 70000 THEN 'S'
-      WHEN ${sq_ft} <= 100000 THEN 'M'
-      WHEN ${sq_ft} <= 130000 THEN 'L'
-      WHEN ${sq_ft} <= 160000 THEN 'XL'
-    END ;;
-    order_by_field: store_size_grouping_order
-  }
-
-  dimension: store_size_grouping_order {
-    hidden: yes
-    type: number
-    sql: CASE ${store_size_grouping}
-      WHEN 'S' THEN 1
-      WHEN 'M' THEN 2
-      WHEN 'L' THEN 3
-      WHEN 'XL' THEN 4
-    END
-    ;;
   }
 
   filter: store_for_comparison {

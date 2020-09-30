@@ -1,24 +1,13 @@
 # If necessary, uncomment the line below to include explore_source.
 # include: "../models/retail_block_model.model.lkml"
+include: "./customer_facts.view"
 
 view: customer_clustering_input {
-  view_label: "Customers"
   derived_table: {
-    explore_source: transactions {
-      column: customer_id {}
-      column: age { field: customers.age }
-      column: total_sales { field: transactions__line_items.total_sales }
-      column: total_quantity { field: transactions__line_items.total_quantity }
-      column: total_gross_margin { field: transactions__line_items.total_gross_margin }
-      column: number_of_transactions {}
-      column: average_item_price { field: transactions__line_items.average_item_price }
-      column: average_basket_size { field: transactions__line_items.average_basket_size }
-      column: first_transaction {}
-      filters: {
-        field: transactions.customer_id
-        value: "NOT NULL"
-      }
-    }
+    sql: SELECT *
+    ,DATE_DIFF(CURRENT_DATE(),CAST(customer_first_purchase_date AS DATE),MONTH) AS months_customer_tenure
+    FROM ${customer_facts.SQL_TABLE_NAME}
+    WHERE customer_id IS NOT NULL ;;
   }
 }
 
@@ -50,30 +39,28 @@ view: customer_clustering_prediction {
     datagroup_trigger: monthly
     sql: WITH customer_clustering_prediction_aggregates AS (SELECT
       CENTROID_ID,
-      AVG(age ) AS average_age,
-      AVG(average_basket_size ) AS average_basket_size,
-      AVG(number_of_transactions ) AS average_number_of_transactions,
-      AVG(total_quantity ) AS average_total_quantity,
-      AVG(total_sales ) AS average_total_sales,
+      AVG(customer_average_basket_size ) AS average_basket_size,
+      AVG(customer_lifetime_transactions ) AS average_number_of_transactions,
+      AVG(customer_lifetime_quantity ) AS average_total_quantity,
+      AVG(customer_lifetime_sales ) AS average_total_sales,
+      AVG(months_customer_tenure) AS average_customer_tenure,
       COUNT(DISTINCT customer_id) AS customer_count
       FROM ${customer_clustering_prediction_base.SQL_TABLE_NAME}
       GROUP BY 1
     ), customer_clustering_prediction_centroid_ranks AS (SELECT
       centroid_id,
-      RANK() OVER (ORDER BY average_age asc) as age_rank,
-      RANK() OVER (ORDER BY average_age desc) as inverse_age_rank,
+      RANK() OVER (ORDER BY average_customer_tenure asc) as average_tenure_rank,
+      RANK() OVER (ORDER BY average_customer_tenure desc) as inverse_average_tenure_rank,
       RANK() OVER (ORDER BY average_basket_size desc) as average_basket_size_rank,
       RANK() OVER (ORDER BY average_total_sales desc) as average_total_sales_rank
       FROM customer_clustering_prediction_aggregates
     )
     SELECT customer_clustering_prediction_base.*
       ,CASE
-        WHEN customer_clustering_prediction_centroid_ranks.age_rank = 1 THEN 'Emerging Millennials 🥑'
-        WHEN customer_clustering_prediction_centroid_ranks.inverse_age_rank = 1 THEN 'Affluent Retirees 👴'
-        WHEN (customer_clustering_prediction_centroid_ranks.average_basket_size_rank = 1 AND customer_clustering_prediction_centroid_ranks.age_rank <> 1 AND customer_clustering_prediction_centroid_ranks.inverse_age_rank <> 1)
-          -- OR (customer_clustering_prediction_centroid_ranks.average_total_sales_rank = 1 AND customer_clustering_prediction_centroid_ranks.age_rank <> 1 AND customer_clustering_prediction_centroid_ranks.inverse_age_rank <> 1)
-          THEN 'Regular Gen Xers 🛒'
-        ELSE 'One-off locals 🏪'
+        WHEN customer_clustering_prediction_centroid_ranks.inverse_average_tenure_rank = 1 THEN 'Loyal Customers'
+        WHEN customer_clustering_prediction_centroid_ranks.average_tenure_rank = 1 THEN 'New Joiners'
+        WHEN customer_clustering_prediction_centroid_ranks.average_basket_size_rank = 1 THEN 'Big-basket Shoppers'
+        ELSE 'Mid-tier Customers'
       END AS customer_segment
     FROM ${customer_clustering_prediction_base.SQL_TABLE_NAME} customer_clustering_prediction_base
     JOIN customer_clustering_prediction_centroid_ranks
@@ -98,42 +85,5 @@ view: customer_clustering_prediction {
       url: "/dashboards/UXtbRLMDVqH7xFkHKRHvbr?Customer%20Segment={{value | encode_uri}}&Date%20Range={{ _filters['transactions.date_comparison_filter'] | url_encode }}"
       label: "Drill into {{rendered_value}}"
     }
-  }
-
-  # Cluster Evaluation
-
-  measure: customer_count {
-    type: count_distinct
-    sql: ${TABLE}.customer_id ;;
-  }
-
-  measure: average_total_sales {
-    type: average
-    value_format_name: usd
-    sql: ${TABLE}.total_sales ;;
-  }
-
-  measure: average_age {
-    type: average
-    value_format_name: decimal_0
-    sql: ${TABLE}.age ;;
-  }
-
-  measure: average_total_quantity {
-    type: average
-    value_format_name: usd
-    sql: ${TABLE}.total_quantity ;;
-  }
-
-  measure: average_number_of_transactions {
-    type: average
-    value_format_name: decimal_1
-    sql: ${TABLE}.number_of_transactions ;;
-  }
-
-  measure: average_basket_size {
-    type: average
-    value_format_name: usd
-    sql: ${TABLE}.average_basket_size ;;
   }
 }

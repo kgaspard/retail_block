@@ -30,13 +30,11 @@ view: transactions_core {
 
   dimension: line_items {
     hidden: yes
-    sql:
-    -- spectacles: ignore
-    ${TABLE}.line_items ;;
+    sql: ${TABLE}.line_items ;;
   }
 
   dimension: store_id {
-    type: number
+    type: string
     hidden: yes
     sql: ${TABLE}.store_id ;;
   }

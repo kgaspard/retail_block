@@ -5,10 +5,11 @@ label: "Retail Application"
 include: "/views/**/*.view" # include all the views
 # Dashboard Includes
 # include: "/dashboards/*.dashboard.lookml" # include all the dashboards
+include: "/dashboards/group_overview.dashboard.lookml"
 
 # Include from Config project:
 include: "//@{CONFIG_PROJECT_NAME}/views/*.view"
-include: "//@{CONFIG_PROJECT_NAME}/models/retail_block_model_config.model.lkml"
+include: "//@{CONFIG_PROJECT_NAME}/models/retail_block_model_config.explores.lkml"
 
 
 explore: transactions {

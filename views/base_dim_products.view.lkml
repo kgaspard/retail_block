@@ -31,28 +31,6 @@ view: products_core {
       icon_url: "https://i.imgur.com/W4tVGrj.png"
       url: "/dashboards/Ipxk660N88jaUxsHolxRts?Focus%20Category={{value | encode_uri}}&Minimum%20Purchase%20Frequency="
     }
-    action: {
-      label: "Text/Call {{rendered_value}} Category Manager"
-      icon_url: "https://cdn.iconscout.com/icon/free/png-256/twilio-282195.png"
-      url: "https://looker-retail-demo-1.appspot.com/api/contactCategoryManager?category={{value | encode_uri}}"
-      param: {
-        name: "category"
-        value: "{{value | encode_uri}}"
-      }
-      form_param: {
-        name: "message"
-        type: textarea
-        label: "Message"
-        required: yes
-        default: "Hi, can you please check out what's going on in {{rendered_value}}? /dashboards/Ipxk660N88jaUxsHolxRts?Category={{value | encode_uri}}"
-      }
-    }
-  }
-
-  dimension: department {
-    label: "Target Gender"
-    type: string
-    sql: ${TABLE}.DEPARTMENT ;;
   }
 
   dimension: name {
@@ -64,22 +42,6 @@ view: products_core {
       icon_url: "https://i.imgur.com/W4tVGrj.png"
       url: "/dashboards/Ipxk660N88jaUxsHolxRts?Focus%20Product={{value | encode_uri}}&Minimum%20Purchase%20Frequency="
     }
-  }
-
-  dimension: sku {
-    type: string
-    sql: ${TABLE}.SKU ;;
-  }
-
-  dimension: area {
-    type: string
-    sql: CASE
-      WHEN ${category} IN ('Accessories', 'Swim', 'Socks', 'Socks & Hosiery', 'Leggings', 'Plus', 'Sleep & Lounge') THEN 'Accessories'
-      WHEN ${category} IN ('Jeans', 'Tops & Tees', 'Shorts', 'Sweaters', 'Underwear', 'Intimates', 'Jumpsuits & Rompers', 'Maternity') THEN 'Casual Wear'
-      WHEN ${category} IN ('Dresses', 'Skirts', 'Blazers & Jackets', 'Pants', 'Pants & Capris', 'Suits') THEN 'Formal Wear'
-      WHEN ${category} IN ('Clothing Sets', 'Suits & Sport Coats', 'Outerwear & Coats', 'Fashion Hoodies & Sweatshirts', 'Suits', 'Active') THEN 'Outerwear'
-    END;;
-    drill_fields: [category]
   }
 
   ##### DERIVED DIMENSIONS #####

@@ -1,23 +1,26 @@
+include: "//@{CONFIG_PROJECT_NAME}/views/customer_facts.view"
+
 view: customer_facts {
+  extends: [customer_facts_config]
+}
+
+view: customer_facts_core {
   view_label: "Customers"
   derived_table: {
-    sql: SELECT
-        customer_id,
-        SUM(sale_price)/NULLIF(COUNT(DISTINCT transaction_id ),0)  AS customer_average_basket_size,
-        SUM(gross_margin) AS customer_lifetime_gross_margin,
-        SUM(sale_price) AS customer_lifetime_sales,
-        COUNT(DISTINCT transaction_id) AS customer_lifetime_transactions,
-        SUM(1) AS customer_lifetime_quantity,
-        MIN(transaction_timestamp) AS customer_first_purchase_date,
-        SUM(CASE WHEN transaction_timestamp >= TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -6 MONTH)) AND transaction_timestamp < CURRENT_TIMESTAMP() THEN sale_price ELSE NULL END)
-          /NULLIF(SUM(CASE WHEN transaction_timestamp >= TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -12 MONTH)) AND transaction_timestamp < TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -6 MONTH)) THEN sale_price ELSE NULL END),0) -1
-          AS customer_spend_trend_past_year
-      FROM ${transactions.SQL_TABLE_NAME} orders
-      LEFT JOIN UNNEST(line_items) line_items
-      GROUP BY 1 ;;
-      datagroup_trigger: daily
-      partition_keys: ["customer_first_purchase_date"]
-      cluster_keys: ["customer_id"]
+    explore_source: transactions {
+      column: customer_id {}
+      column: customer_average_basket_size { field: transactions__line_items.average_basket_size }
+      column: customer_lifetime_gross_margin { field: transactions__line_items.total_gross_margin }
+      column: customer_lifetime_sales { field: transactions__line_items.total_sales }
+      column: customer_lifetime_transactions { field: transactions.number_of_transactions }
+      column: customer_lifetime_quantity { field: transactions__line_items.total_quantity }
+      column: customer_first_purchase_date { field: transactions.first_transaction }
+      column: customer_spend_trend_past_year { field: transactions__line_items.sales_trend_past_year }
+      filters: {
+        field: transactions.transaction_date
+        value: ""
+      }
+    }
   }
 
   dimension: customer_id {
@@ -61,6 +64,14 @@ view: customer_facts {
     group_label: "Customer Lifetime"
     timeframes: [raw,date,week,month]
     sql: ${TABLE}.customer_first_purchase_date ;;
+  }
+
+  dimension_group: customer_tenure {
+    type: duration
+    sql_start: ${customer_first_purchase_raw} ;;
+    sql_end: CURRENT_TIMESTAMP() ;;
+    group_label: "Customer Lifetime"
+    intervals: [day,week,month]
   }
 
   dimension: customer_spend_trend_past_year {

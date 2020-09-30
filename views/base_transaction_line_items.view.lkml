@@ -79,6 +79,16 @@ view: transactions__line_items_core {
     drill_fields: [transactions.drill_detail*]
   }
 
+  measure: sales_trend_past_year {
+    view_label: "Date Comparison"
+    label: "Spend Trend in Past Year"
+    type: number
+    sql: SUM(CASE WHEN ${transactions.transaction_raw} >= TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -6 MONTH)) AND ${transactions.transaction_raw} < CURRENT_TIMESTAMP() THEN ${sale_price} ELSE NULL END)
+          /NULLIF(SUM(CASE WHEN ${transactions.transaction_raw} >= TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -12 MONTH)) AND ${transactions.transaction_raw} < TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -6 MONTH)) THEN ${sale_price} ELSE NULL END),0) -1;;
+    value_format_name: percent_1
+    drill_fields: [transactions.drill_detail*]
+  }
+
   ##### PER STORE MEASURES #####
 
   measure: total_sales_per_store {
@@ -114,5 +124,19 @@ view: transactions__line_items_core {
     sql: ${transactions.number_of_customers}/NULLIF(${number_of_addresses},0) ;;
     value_format_name: decimal_0
     drill_fields: [transactions.drill_detail*]
+  }
+
+  ##### PRODUCT AND TRANSACTION SEQUENCE MEASURES #####
+
+  measure: main_category {
+    hidden: yes
+    type: string
+    sql: STRING_AGG(${products.category}, ", " ORDER BY ${sale_price} desc LIMIT 1) ;;
+  }
+
+  measure: category_list {
+    hidden: yes
+    type: string
+    sql: STRING_AGG(distinct ${products.category}, ", " ORDER BY ${products.category} asc) ;;
   }
 }

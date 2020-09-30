@@ -1,5 +1,19 @@
+view: customer_transaction_sequence_base {
+  derived_table: {
+    explore_source: transactions {
+      column: customer_id {}
+      column: transaction_timestamp { field: transactions.transaction_raw }
+      column: main_category { field: transactions__line_items.main_category}
+      column: category_list { field: transactions__line_items.category_list}
+      bind_filters: {
+        from_field: transactions.transaction_date
+        to_field: transactions.transaction_date
+      }
+    }
+  }
+}
+
 view: customer_transaction_sequence {
-  # TO DO: replace with reference to NDT
   derived_table: {
     sql: SELECT customer_id, transaction_timestamp, category_list, transaction_sequence
         ,MIN(CASE WHEN transaction_sequence=1 THEN category_list ELSE NULL END) OVER (PARTITION BY customer_id) AS category_list_transaction_1
@@ -16,15 +30,7 @@ view: customer_transaction_sequence {
        (SELECT customer_id, transaction_timestamp, main_category, category_list
         , DENSE_RANK() OVER (PARTITION BY customer_id ORDER BY transaction_timestamp ASC) AS transaction_sequence
         FROM
-        (SELECT transactions.customer_id, transactions.transaction_timestamp
-          , STRING_AGG(products.category, ", " ORDER BY line_items.sale_price desc LIMIT 1) as main_category
-          , STRING_AGG(distinct products.category, ", " ORDER BY products.category asc) as category_list
-        FROM ${transactions.SQL_TABLE_NAME} transactions
-        LEFT JOIN UNNEST(transactions.line_items) line_items
-        LEFT JOIN ${products.SQL_TABLE_NAME}  AS products
-          ON line_items.product_id = products.ID
-        WHERE {% condition transactions.transaction_date %} transaction_timestamp {% endcondition %}
-        GROUP BY 1,2));;
+        ${customer_transaction_sequence_base.SQL_TABLE_NAME});;
   }
 
   dimension: customer_id {

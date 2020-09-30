@@ -1,3 +1,17 @@
+view: store_weather_stores_base {
+  derived_table: {
+    explore_source: transactions {
+      column: id { field: stores.id }
+      column: latitude { field: stores.latitude }
+      column: latitude { field: stores.longitude }
+      filters: {
+        field: transactions.transaction_date
+        value: "2 years"
+      }
+    }
+  }
+}
+
 view: store_weather {
   label: "Store Weather ⛅"
   derived_table: {
@@ -92,7 +106,7 @@ view: store_weather {
         distances AS (SELECT stores.id as store_id
         ,stations.id AS station_id
         ,ST_DISTANCE(ST_GEOGPOINT(stores.longitude,stores.latitude),ST_GEOGPOINT(stations.longitude,stations.latitude)) as dist
-        FROM ${stores.SQL_TABLE_NAME} stores
+        FROM ${store_weather_stores_base.SQL_TABLE_NAME} stores
         CROSS JOIN `bigquery-public-data.ghcn_d.ghcnd_stations` stations)
         SELECT distances.store_id
           ,weather_pivoted.date

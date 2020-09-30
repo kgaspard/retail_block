@@ -202,8 +202,8 @@ view: stock_forecasting_product_store_week_facts {
       column: name { field: products.name }
       column: category { field: products.category }
       column: total_quantity { field: transactions__line_items.total_quantity }
-      column: store_size_grouping { field: stores.store_size_grouping }
-      column: sq_ft { field: stores.sq_ft }
+#       column: store_size_grouping { field: stores.store_size_grouping }
+#       column: sq_ft { field: stores.sq_ft }
       filters: {
         field: transactions.transaction_date
         value: "1 years ago for 1 years"
@@ -215,8 +215,8 @@ view: stock_forecasting_product_store_week_facts {
   dimension: name {}
   dimension: category {}
   dimension: total_quantity {}
-  dimension: store_size_grouping {}
-  dimension: sq_ft {}
+#   dimension: store_size_grouping {}
+#   dimension: sq_ft {}
 }
 
 view: stock_forecasting_product_store_week_facts_prior_year {
@@ -261,9 +261,9 @@ view: stock_forecasting_store_week_facts_prior_year {
       column: total_quantity { field: transactions__line_items.total_quantity }
       column: average_basket_size { field: transactions__line_items.average_basket_size }
       column: average_item_price { field: transactions__line_items.average_item_price }
-      column: average_daily_precipitation { field: store_weather.average_daily_precipitation }
-      column: average_max_temparature { field: store_weather.average_max_temparature }
-      column: average_min_temparature { field: store_weather.average_min_temparature }
+#       column: average_daily_precipitation { field: store_weather.average_daily_precipitation }
+#       column: average_max_temparature { field: store_weather.average_max_temparature }
+#       column: average_min_temparature { field: store_weather.average_min_temparature }
       column: total_sales { field: transactions__line_items.total_sales }
       column: total_gross_margin { field: transactions__line_items.total_gross_margin }
       column: percent_customer_transactions {}
@@ -281,9 +281,9 @@ view: stock_forecasting_store_week_facts_prior_year {
   dimension: total_quantity {}
   dimension: average_basket_size {}
   dimension: average_item_price {}
-  dimension: average_daily_precipitation {}
-  dimension: average_max_temparature {}
-  dimension: average_min_temparature {}
+#   dimension: average_daily_precipitation {}
+#   dimension: average_max_temparature {}
+#   dimension: average_min_temparature {}
   dimension: total_sales {}
   dimension: total_gross_margin {}
   dimension: percent_customer_transactions {}
@@ -353,8 +353,8 @@ view: stock_forecasting_input {
       column: store_id { field: stock_forecasting_product_store_week_facts.id}
       column: product_name { field: stock_forecasting_product_store_week_facts.name }
       column: category {}
-      column: sq_ft {}
-      column: store_size_grouping {}
+#       column: sq_ft {}
+#       column: store_size_grouping {}
       column: total_quantity {}
       column: stock_forecasting_category_week_facts_prior_year__average_basket_size { field: stock_forecasting_category_week_facts_prior_year.average_basket_size }
       column: stock_forecasting_category_week_facts_prior_year__average_item_price { field: stock_forecasting_category_week_facts_prior_year.average_item_price }
@@ -373,10 +373,10 @@ view: stock_forecasting_input {
       column: stock_forecasting_product_store_week_facts_prior_year__total_quantity { field: stock_forecasting_product_store_week_facts_prior_year.total_quantity }
       column: stock_forecasting_product_store_week_facts_prior_year__total_sales { field: stock_forecasting_product_store_week_facts_prior_year.total_sales }
       column: stock_forecasting_store_week_facts_prior_year__average_basket_size { field: stock_forecasting_store_week_facts_prior_year.average_basket_size }
-      column: stock_forecasting_store_week_facts_prior_year__average_daily_precipitation { field: stock_forecasting_store_week_facts_prior_year.average_daily_precipitation }
+#       column: stock_forecasting_store_week_facts_prior_year__average_daily_precipitation { field: stock_forecasting_store_week_facts_prior_year.average_daily_precipitation }
       column: stock_forecasting_store_week_facts_prior_year__average_item_price { field: stock_forecasting_store_week_facts_prior_year.average_item_price }
-      column: stock_forecasting_store_week_facts_prior_year__average_max_temparature { field: stock_forecasting_store_week_facts_prior_year.average_max_temparature }
-      column: stock_forecasting_store_week_facts_prior_year__average_min_temparature { field: stock_forecasting_store_week_facts_prior_year.average_min_temparature }
+#       column: stock_forecasting_store_week_facts_prior_year__average_max_temparature { field: stock_forecasting_store_week_facts_prior_year.average_max_temparature }
+#       column: stock_forecasting_store_week_facts_prior_year__average_min_temparature { field: stock_forecasting_store_week_facts_prior_year.average_min_temparature }
       column: stock_forecasting_store_week_facts_prior_year__number_of_customers { field: stock_forecasting_store_week_facts_prior_year.number_of_customers }
       column: stock_forecasting_store_week_facts_prior_year__number_of_transactions { field: stock_forecasting_store_week_facts_prior_year.number_of_transactions }
       column: stock_forecasting_store_week_facts_prior_year__percent_customer_transactions { field: stock_forecasting_store_week_facts_prior_year.percent_customer_transactions }

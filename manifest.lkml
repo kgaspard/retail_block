@@ -34,12 +34,14 @@ constant: CUSTOMERS_TABLE_NAME {
 }
 
 constant: PRODUCTS_TABLE_NAME {
-  value: "dim_products"
+  # value: "dim_products"
+  value: "CM_SA_DIM_MATERIAL"
   export: override_required
 }
 
 constant: STORES_TABLE_NAME {
-  value: "dim_stores"
+  # value: "dim_stores"
+  value: "CM_SA_DIM_STORE"
   export: override_required
 }
 
