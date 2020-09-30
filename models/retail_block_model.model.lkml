@@ -1,11 +1,22 @@
-connection: "retail-block-connection"
-label: "Retail"
+connection: "@{CONNECTION_NAME}"
+label: "Retail Application"
 
+# View Includes
 include: "/views/**/*.view" # include all the views
-include: "/dashboards/*.dashboard.lookml" # include all the dashboards
+# Dashboard Includes
+# include: "/dashboards/*.dashboard.lookml" # include all the dashboards
+
+# Include from Config project:
+include: "//@{CONFIG_PROJECT_NAME}/views/*.view"
+include: "//@{CONFIG_PROJECT_NAME}/models/retail_block_model_config.model.lkml"
 
 
 explore: transactions {
+  extends: [transactions_config]
+}
+
+explore: transactions_core {
+  extension: required
   label: "(1) Transaction Detail 🏷"
   always_filter: {
     filters: {
@@ -80,57 +91,57 @@ explore: transactions {
   {% endif %};;
 }
 
-explore: stock_forecasting_explore_base {
-  label: "(2) Stock Forecasting 🏭"
+# explore: stock_forecasting_explore_base {
+#   label: "(2) Stock Forecasting 🏭"
 
-  always_filter: {
-    filters: {
-      field: transaction_week_filter
-      value: "last 12 weeks"
-    }
-  }
+#   always_filter: {
+#     filters: {
+#       field: transaction_week_filter
+#       value: "last 12 weeks"
+#     }
+#   }
 
-  join: stock_forecasting_prediction {
-    relationship: one_to_one
-    type: full_outer
-    sql_on: ${stock_forecasting_explore_base.transaction_week_of_year_for_join} = ${stock_forecasting_prediction.transaction_week_of_year}
-          AND ${stock_forecasting_explore_base.store_id_for_join} = ${stock_forecasting_prediction.store_id}
-          AND ${stock_forecasting_explore_base.product_name_for_join} = ${stock_forecasting_prediction.product_name};;
-  }
-}
+#   join: stock_forecasting_prediction {
+#     relationship: one_to_one
+#     type: full_outer
+#     sql_on: ${stock_forecasting_explore_base.transaction_week_of_year_for_join} = ${stock_forecasting_prediction.transaction_week_of_year}
+#           AND ${stock_forecasting_explore_base.store_id_for_join} = ${stock_forecasting_prediction.store_id}
+#           AND ${stock_forecasting_explore_base.product_name_for_join} = ${stock_forecasting_prediction.product_name};;
+#   }
+# }
 
-explore: order_purchase_affinity {
-  label: "(3) Item Affinity 🔗"
-  view_label: "Item Affinity"
+# explore: order_purchase_affinity {
+#   label: "(3) Item Affinity 🔗"
+#   view_label: "Item Affinity"
 
-  always_filter: {
-    filters: {
-      field: affinity_timeframe
-      value: "last 90 days"
-    }
-    filters: {
-      field: order_items_base.product_level
-      value: "product"
-    }
-  }
+#   always_filter: {
+#     filters: {
+#       field: affinity_timeframe
+#       value: "last 90 days"
+#     }
+#     filters: {
+#       field: order_items_base.product_level
+#       value: "product"
+#     }
+#   }
 
-  join: order_items_base {}
+#   join: order_items_base {}
 
-  join: total_orders {
-    type: cross
-    relationship: many_to_one
-  }
-}
+#   join: total_orders {
+#     type: cross
+#     relationship: many_to_one
+#   }
+# }
 
-explore: customer_clustering_prediction {
-  label: "(4) Customer Segments 👤"
-  join: transactions {
-    # to avoid warning on dashboard URL link in customer_segment dimension
-    fields: [transactions.date_comparison_filter]
-  }
-}
+# explore: customer_clustering_prediction {
+#   label: "(4) Customer Segments 👤"
+#   join: transactions {
+#     # to avoid warning on dashboard URL link in customer_segment dimension
+#     fields: [transactions.date_comparison_filter]
+#   }
+# }
 
-### caching
+# Datagroups:
 
 datagroup: daily {
   sql_trigger: SELECT CURRENT_DATE() ;;
@@ -143,4 +154,8 @@ datagroup: weekly {
 
 datagroup: monthly {
   sql_trigger: SELECT EXTRACT(MONTH FROM CURRENT_DATE()) ;;
+}
+
+datagroup: forever {
+  sql_trigger: SELECT 1 ;;
 }

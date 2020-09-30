@@ -1,5 +1,11 @@
+include: "//@{CONFIG_PROJECT_NAME}/views/base_customers.view"
+
 view: customers {
-  sql_table_name: `looker-private-demo.retail.customers` ;;
+  extends: [customers_config]
+}
+
+view: customers_core {
+  sql_table_name: `@{SCHEMA_NAME}.@{CUSTOMERS_TABLE_NAME}` ;;
   drill_fields: [id]
 
   dimension: id {

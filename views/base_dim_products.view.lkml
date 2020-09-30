@@ -1,11 +1,17 @@
+include: "//@{CONFIG_PROJECT_NAME}/views/base_products.view"
+
 view: products {
+  extends: [products_config]
+}
+
+view: products_core {
   label: "Products 📦"
-  sql_table_name: `looker-private-demo.retail.products` ;;
+  sql_table_name: `@{SCHEMA_NAME}.@{PRODUCTS_TABLE_NAME}` ;;
   drill_fields: [id]
 
   dimension: id {
     primary_key: yes
-    type: number
+    type: string
     hidden: yes
     sql: ${TABLE}.ID ;;
   }

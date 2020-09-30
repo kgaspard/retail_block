@@ -1,10 +1,12 @@
+include: "//@{CONFIG_PROJECT_NAME}/views/base_stores.view"
+
 view: stores {
+  extends: [stores_config]
+}
+
+view: stores_core {
   label: "Stores 🏪"
-#   sql_table_name: looker-private-demo.retail.us_stores ;;
-  derived_table: {
-    datagroup_trigger: monthly
-    sql: SELECT * FROM `looker-private-demo.retail.us_stores` WHERE id IN (SELECT distinct store_id from ${transactions.SQL_TABLE_NAME});;
-  }
+  sql_table_name: @{SCHEMA_NAME}.@{STORES_TABLE_NAME} ;;
 
   dimension: id {
     primary_key: yes

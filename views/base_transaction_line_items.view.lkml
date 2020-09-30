@@ -1,13 +1,14 @@
+include: "//@{CONFIG_PROJECT_NAME}/views/base_transactions_line_items.view"
+
 view: transactions__line_items {
+  extends: [transactions__line_items_config]
+}
+
+view: transactions__line_items_core {
   label: "Transactions"
 
-  dimension: gross_margin {
-    type: number
-    sql: ${TABLE}.gross_margin ;;
-  }
-
   dimension: product_id {
-    type: number
+    type: string
     hidden: yes
     sql: ${TABLE}.product_id ;;
   }
@@ -17,7 +18,17 @@ view: transactions__line_items {
     sql: ${TABLE}.sale_price ;;
   }
 
+  dimension: cost_of_goods_sold {
+    type: number
+    sql: ${TABLE}.cost_of_goods_sold ;;
+  }
+
   ##### DERIVED DIMENSIONS #####
+
+  dimension: gross_margin {
+    type: number
+    sql: ${sale_price} - ${cost_of_goods_sold} ;;
+  }
 
 
   ##### MEASURES #####
