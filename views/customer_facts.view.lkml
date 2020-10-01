@@ -12,7 +12,7 @@ view: customer_store_sales {
       column: store_id {}
       column: total_sales { field: transactions__line_items.total_sales }
       filters: {
-        field: transactions.transaction_date
+        field: transactions.date_comparison_filter
         value: ""
       }
     }
@@ -51,7 +51,7 @@ view: customer_facts_core {
       column: customer_spend_trend_past_year { field: transactions__line_items.sales_trend_past_year }
       column: customer_favorite_store_id { field: customer_favorite_store.favorite_store_id }
       filters: {
-        field: transactions.transaction_date
+        field: transactions.date_comparison_filter
         value: ""
       }
     }

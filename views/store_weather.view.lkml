@@ -5,7 +5,7 @@ view: store_weather_stores_base {
       column: latitude { field: stores.latitude }
       column: longitude { field: stores.longitude }
       filters: {
-        field: transactions.transaction_date
+        field: transactions.date_comparison_filter
         value: "2 years"
       }
     }

@@ -24,7 +24,7 @@ explore: transactions_core {
   label: "(1) Transaction Detail 🏷"
   always_filter: {
     filters: {
-      field: transaction_date
+      field: date_comparison_filter
       value: "last 30 days"
     }
   }
@@ -100,13 +100,15 @@ explore: transactions_core {
   }
 
   sql_always_where: {% if transactions.date_comparison_filter._is_filtered %}
-    {% if transactions.comparison_type._parameter_value == 'year' %}
-    {% condition transactions.date_comparison_filter %} ${transaction_raw} {% endcondition %} OR (${transaction_raw} >= TIMESTAMP(DATE_ADD(CAST({% date_start transactions.date_comparison_filter %} AS DATE),INTERVAL -1 YEAR)) AND ${transaction_raw} <= TIMESTAMP(DATE_ADD(CAST({% date_end transactions.date_comparison_filter %} AS DATE),INTERVAL -364 DAY)))
-    {% elsif transactions.comparison_type._parameter_value == 'week' %}
-    {% condition transactions.date_comparison_filter %} ${transaction_raw} {% endcondition %} OR (${transaction_raw} >= TIMESTAMP(DATE_ADD(CAST({% date_start transactions.date_comparison_filter %} AS DATE),INTERVAL -1 WEEK)) AND ${transaction_raw} <= TIMESTAMP(DATE_ADD(CAST({% date_end transactions.date_comparison_filter %} AS DATE),INTERVAL -6 DAY)))
-    {% else %}
-    1=1
-    {% endif %}
+  {% if transactions.comparison_type._parameter_value == 'current' %}
+  {% condition transactions.date_comparison_filter %} ${transaction_raw} {% endcondition %}
+  {% elsif transactions.comparison_type._parameter_value == 'year' %}
+  {% condition transactions.date_comparison_filter %} ${transaction_raw} {% endcondition %} OR (${transaction_raw} >= TIMESTAMP(DATE_ADD(CAST({% date_start transactions.date_comparison_filter %} AS DATE),INTERVAL -1 YEAR)) AND ${transaction_raw} <= TIMESTAMP(DATE_ADD(CAST({% date_end transactions.date_comparison_filter %} AS DATE),INTERVAL -364 DAY)))
+  {% elsif transactions.comparison_type._parameter_value == 'week' %}
+  {% condition transactions.date_comparison_filter %} ${transaction_raw} {% endcondition %} OR (${transaction_raw} >= TIMESTAMP(DATE_ADD(CAST({% date_start transactions.date_comparison_filter %} AS DATE),INTERVAL -1 WEEK)) AND ${transaction_raw} <= TIMESTAMP(DATE_ADD(CAST({% date_end transactions.date_comparison_filter %} AS DATE),INTERVAL -6 DAY)))
+  {% else %}
+  1=1
+  {% endif %}
   {% else %}
   1=1
   {% endif %};;
@@ -154,13 +156,11 @@ explore: stock_forecasting_explore_base {
 #   }
 # }
 
-# explore: customer_clustering_prediction {
-#   label: "(4) Customer Segments 👤"
-#   join: transactions {
-#     # to avoid warning on dashboard URL link in customer_segment dimension
-#     fields: [transactions.date_comparison_filter]
-#   }
-# }
+explore: customer_clustering_prediction {
+  hidden: yes
+  label: "(4) Customer Segments 👤"
+  fields: [customer_clustering_prediction.customer_segment_basic_dim]
+}
 
 # Datagroups:
 

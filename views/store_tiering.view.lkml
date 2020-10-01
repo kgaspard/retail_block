@@ -5,7 +5,7 @@ view: store_tiering_base {
       column: name { field: stores.name }
       column: total_sales { field: transactions__line_items.total_sales }
       filters: {
-        field: transactions.transaction_date
+        field: transactions.date_comparison_filter
         value: "2 years"
       }
     }

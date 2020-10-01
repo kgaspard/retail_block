@@ -12,7 +12,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions__line_items.total_quantity]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -50,7 +49,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions__line_items.total_quantity]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -88,7 +86,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions__line_items.total_quantity]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -126,7 +123,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions__line_items.total_quantity]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -158,17 +154,14 @@
   - title: Customer Segment
     name: Customer Segment
     model: retail_block_model
-    explore: transactions
+    explore: customer_clustering_prediction
     type: single_value
-    fields: [customer_clustering_prediction.customer_segment]
-    filters:
-      transactions.transaction_date: 30 days
-    sorts: [customer_clustering_prediction.customer_segment]
+    fields: [customer_clustering_prediction.customer_segment_basic_dim]
     limit: 500
     column_limit: 50
     series_types: {}
     listen:
-      Customer Segment: customer_clustering_prediction.customer_segment
+      Customer Segment: customer_clustering_prediction.customer_segment_basic_dim
     row: 0
     col: 0
     width: 24
@@ -204,7 +197,7 @@
     type: looker_grid
     fields: [customer_facts.customer_id, customer_facts.customer_spend_trend_past_year]
     filters:
-      transactions.transaction_date: 12 months
+      transactions.date_comparison_filter: 12 months
       customer_facts.customer_spend_trend_past_year: "[-1, -0.1]"
     sorts: [customer_facts.customer_spend_trend_past_year]
     limit: 500
@@ -250,7 +243,7 @@
     type: single_value
     fields: [transactions__line_items.total_sales]
     filters:
-      transactions.transaction_date: 12 months
+      transactions.date_comparison_filter: 12 months
       customer_facts.customer_spend_trend_past_year: "[-1, -0.1]"
     limit: 5000
     column_limit: 50
@@ -332,7 +325,7 @@
     fields: [transactions__line_items.total_sales, customer_favorite_store_details.location,
       customer_favorite_store_details.name]
     filters:
-      transactions.transaction_date: 12 months
+      transactions.date_comparison_filter: 12 months
     sorts: [transactions__line_items.total_sales desc]
     limit: 500
     column_limit: 50

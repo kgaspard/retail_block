@@ -10,6 +10,10 @@ view: date_comparison {
     view_label: "Date Comparison"
     type: unquoted
     allowed_value: {
+      label: "Current year only"
+      value: "current"
+    }
+    allowed_value: {
       label: "Year"
       value: "year"
     }
@@ -17,7 +21,7 @@ view: date_comparison {
       label: "Week"
       value: "week"
     }
-    default_value: "year"
+    default_value: "current"
   }
 
   dimension: selected_comparison {

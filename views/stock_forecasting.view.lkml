@@ -18,7 +18,7 @@ view: stock_forecasting_explore_base {
       column: sales { field: transactions__line_items.total_sales }
       bind_filters: {
         from_field: stock_forecasting_explore_base.transaction_week_filter
-        to_field: transactions.transaction_date
+        to_field: transactions.date_comparison_filter
       }
     }
   }

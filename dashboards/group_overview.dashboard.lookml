@@ -12,7 +12,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions.percent_customer_transactions]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -50,7 +49,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions.percent_customer_transactions]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -87,7 +85,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions.percent_customer_transactions]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -124,7 +121,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions.percent_customer_transactions]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -192,7 +188,7 @@
     series_types: {}
     hidden_fields:
     listen:
-      Date: transactions.transaction_date
+      Date: transactions.date_comparison_filter
     row: 4
     col: 10
     width: 14
@@ -204,7 +200,6 @@
     type: looker_bar
     fields: [transactions__line_items.sales_change, products.category]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       products.category: "-NULL"
     sorts: [transactions__line_items.sales_change desc]
@@ -336,7 +331,7 @@
     pivots: [transactions.transaction_year]
     fill_fields: [transactions.transaction_month_num, transactions.transaction_year]
     filters:
-      transactions.transaction_date: 4 years
+      transactions.date_comparison_filter: 4 years
       transactions.transaction_month: before 0 months ago
     sorts: [transactions__line_items.total_sales desc 0, transactions.transaction_year]
     limit: 500
@@ -384,7 +379,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       customer_clustering_prediction.customer_segment]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
       customer_clustering_prediction.customer_segment: New Joiners%
@@ -423,10 +417,9 @@
     fields: [transactions.selected_comparison, transactions__line_items.total_sales,
       transactions.number_of_transactions, transactions__line_items.average_basket_size]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
-      customer_clustering_prediction.customer_segment: Mid-tier Customers%
+      customer_clustering_prediction.customer_segment: Mid-tier Customers
     sorts: [transactions.selected_comparison desc]
     limit: 500
     column_limit: 50
@@ -460,10 +453,9 @@
     fields: [transactions.selected_comparison, transactions__line_items.total_sales,
       transactions.number_of_transactions, transactions__line_items.average_basket_size]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
-      customer_clustering_prediction.customer_segment: Loyal Customers%
+      customer_clustering_prediction.customer_segment: Loyal Customers
     sorts: [transactions.selected_comparison desc]
     limit: 500
     column_limit: 50
@@ -497,10 +489,9 @@
     fields: [transactions.selected_comparison, transactions__line_items.total_sales,
       transactions.number_of_transactions, transactions__line_items.average_basket_size]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
-      customer_clustering_prediction.customer_segment: Big-basket Shoppers%
+      customer_clustering_prediction.customer_segment: Big-basket Shoppers
     sorts: [transactions.selected_comparison desc]
     limit: 500
     column_limit: 50
@@ -605,7 +596,6 @@
     type: looker_bar
     fields: [stores.name, transactions__line_items.sales_change]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions__line_items.sales_change: NOT NULL
     sorts: [transactions__line_items.sales_change desc]

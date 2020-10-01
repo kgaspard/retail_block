@@ -12,7 +12,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions.percent_customer_transactions]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -51,7 +50,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions.percent_customer_transactions]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -89,7 +87,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions.percent_customer_transactions]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -127,7 +124,6 @@
       transactions.number_of_transactions, transactions__line_items.average_basket_size,
       transactions.percent_customer_transactions]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
     sorts: [transactions.selected_comparison desc]
@@ -187,7 +183,6 @@
     fields: [transactions__line_items.sales_change, transactions.number_of_transactions_change,
       stores.store_comparison_vs_stores_in_tier_with_weather]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
     sorts: [transactions__line_items.sales_change desc]
     limit: 500
@@ -304,7 +299,6 @@
     fields: [stores.store_comparison_vs_stores_in_tier_with_weather, transactions__line_items.sales_change,
       transactions.number_of_transactions_change]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
     sorts: [transactions.number_of_transactions_change desc]
     limit: 500
@@ -530,7 +524,7 @@
     color_by: root
     hidden_fields: []
     listen:
-      Date: transactions.transaction_date
+      Date: transactions.date_comparison_filter
       Store: stores.store_for_comparison
     row: 16
     col: 0
@@ -654,7 +648,7 @@
     color_by: root
     hidden_fields: []
     listen:
-      Date: transactions.transaction_date
+      Date: transactions.date_comparison_filter
       Store: stores.store_for_comparison
     row: 16
     col: 12
@@ -668,7 +662,6 @@
     fields: [transactions.selected_comparison, transactions__line_items.total_sales,
       transactions.number_of_transactions, transactions__line_items.average_basket_size]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
       customer_clustering_prediction.customer_segment: New Joiners
@@ -706,7 +699,6 @@
     fields: [transactions.selected_comparison, transactions__line_items.total_sales,
       transactions.number_of_transactions, transactions__line_items.average_basket_size]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
       customer_clustering_prediction.customer_segment: Loyal Customers
@@ -744,7 +736,6 @@
     fields: [transactions.selected_comparison, transactions__line_items.total_sales,
       transactions.number_of_transactions, transactions__line_items.average_basket_size]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
       customer_clustering_prediction.customer_segment: Mid-tier Customers
@@ -1068,7 +1059,7 @@
     hidden_fields: []
     defaults_version: 1
     listen:
-      Date: transactions.transaction_date
+      Date: transactions.date_comparison_filter
       Store: stores.store_for_comparison
     row: 35
     col: 0
@@ -1083,7 +1074,6 @@
       customer_clustering_prediction.customer_segment, transactions.number_of_customers_change]
     pivots: [stores.store_comparison_vs_tier]
     filters:
-      transactions.transaction_date: 2 years
       customer_clustering_prediction.customer_segment: "-NULL"
       transactions.comparison_type: year
       stores.store_comparison_vs_tier: "-NULL"
@@ -1204,7 +1194,6 @@
     fields: [transactions.selected_comparison, transactions__line_items.total_sales,
       transactions.number_of_transactions, transactions__line_items.average_basket_size]
     filters:
-      transactions.transaction_date: 2 years
       transactions.comparison_type: year
       transactions.selected_comparison: "-NULL"
       customer_clustering_prediction.customer_segment: Big-basket Shoppers

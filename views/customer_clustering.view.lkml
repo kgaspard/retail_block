@@ -60,7 +60,8 @@ view: customer_clustering_prediction {
         WHEN customer_clustering_prediction_centroid_ranks.inverse_average_tenure_rank = 1 THEN 'Loyal Customers'
         WHEN customer_clustering_prediction_centroid_ranks.average_tenure_rank = 1 THEN 'New Joiners'
         WHEN customer_clustering_prediction_centroid_ranks.average_basket_size_rank = 1 THEN 'Big-basket Shoppers'
-        ELSE 'Mid-tier Customers'
+        WHEN customer_clustering_prediction_base.centroid_id IS NOT NULL THEN 'Mid-tier Customers'
+        ELSE NULL
       END AS customer_segment
     FROM ${customer_clustering_prediction_base.SQL_TABLE_NAME} customer_clustering_prediction_base
     JOIN customer_clustering_prediction_centroid_ranks
@@ -85,5 +86,12 @@ view: customer_clustering_prediction {
       url: "/dashboards/retail_block_model::customer_segment_deepdive?Customer%20Segment={{value | encode_uri}}&Date%20Range={{ _filters['transactions.date_comparison_filter'] | url_encode }}"
       label: "Drill into {{rendered_value}}"
     }
+  }
+
+  #  To avoid _filters warning in link:
+  dimension: customer_segment_basic_dim {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.customer_segment ;;
   }
 }

@@ -6,8 +6,8 @@ view: customer_transaction_sequence_base {
       column: main_category { field: transactions__line_items.main_category}
       column: category_list { field: transactions__line_items.category_list}
       bind_filters: {
-        from_field: transactions.transaction_date
-        to_field: transactions.transaction_date
+        from_field: transactions.date_comparison_filter
+        to_field: transactions.date_comparison_filter
       }
     }
   }
