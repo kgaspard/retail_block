@@ -5,6 +5,7 @@ view: customers {
 }
 
 view: customers_core {
+  label: "Customers 👥"
   sql_table_name: `@{SCHEMA_NAME}.@{CUSTOMERS_TABLE_NAME}` ;;
   drill_fields: [id]
 

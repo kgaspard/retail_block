@@ -37,7 +37,7 @@ view: customer_favorite_store_details {
 }
 
 view: customer_facts_core {
-  view_label: "Customers"
+  view_label: "Customers 👥"
   derived_table: {
     datagroup_trigger: weekly
     explore_source: transactions {

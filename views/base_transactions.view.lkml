@@ -120,7 +120,7 @@ view: transactions_core {
   ##### DATE COMPARISON MEASURES #####
 
   measure: number_of_transactions_change {
-    view_label: "Date Comparison"
+    view_label: "Date Comparison 📅"
     label: "Number of Transactions Change (%)"
     type: number
     sql: COUNT(distinct CASE WHEN ${transactions.selected_comparison} LIKE 'This%' THEN ${transaction_id} ELSE NULL END) / NULLIF(COUNT(distinct CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' THEN ${transaction_id} ELSE NULL END),0) -1;;
@@ -129,7 +129,7 @@ view: transactions_core {
   }
 
   measure: number_of_customers_change {
-    view_label: "Date Comparison"
+    view_label: "Date Comparison 📅"
     label: "Number of Customers Change (%)"
     type: number
     sql: COUNT(distinct CASE WHEN ${transactions.selected_comparison} LIKE 'This%' THEN ${customer_id} ELSE NULL END) / NULLIF(COUNT(distinct CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' THEN ${customer_id} ELSE NULL END),0) -1;;

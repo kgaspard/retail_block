@@ -38,7 +38,7 @@ explore: transactions_core {
 
   join: customer_facts {
     relationship: many_to_one
-    view_label: "Customers"
+    view_label: "Customers 👥"
     sql_on: ${transactions.customer_id} = ${customer_facts.customer_id} ;;
   }
 
@@ -48,7 +48,7 @@ explore: transactions_core {
   }
 
   join: customer_favorite_store_details {
-    view_label: "Customers"
+    view_label: "Customers 👥"
     relationship: many_to_one
     fields: [customer_favorite_store_details.name,customer_favorite_store_details.location]
     sql_on: ${customer_facts.customer_favorite_store_id} = ${customer_favorite_store_details.id} ;;
@@ -91,7 +91,7 @@ explore: transactions_core {
   }
 
   join: customer_clustering_prediction {
-    view_label: "Customers"
+    view_label: "Customers 👥"
     relationship: many_to_one
     sql_on: ${transactions.customer_id} = ${customer_clustering_prediction.customer_id} ;;
   }

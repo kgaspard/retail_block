@@ -14,7 +14,7 @@ view: customer_transaction_sequence_base {
 }
 
 view: customer_transaction_sequence {
-  label: "Customer Transaction Sequence ◯‍◯‍◯‍◯‍◯"
+  label: "Customer Transaction Sequence ➡️"
   derived_table: {
     sql: SELECT customer_id, transaction_timestamp, category_list, transaction_sequence
         ,MIN(CASE WHEN transaction_sequence=1 THEN category_list ELSE NULL END) OVER (PARTITION BY customer_id) AS category_list_transaction_1

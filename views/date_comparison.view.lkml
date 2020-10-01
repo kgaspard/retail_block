@@ -2,12 +2,12 @@ view: date_comparison {
   extension: required
 
   filter: date_comparison_filter {
-    view_label: "Date Comparison"
+    view_label: "Date Comparison 📅"
     type: date
   }
 
   parameter: comparison_type {
-    view_label: "Date Comparison"
+    view_label: "Date Comparison 📅"
     type: unquoted
     allowed_value: {
       label: "Current year only"
@@ -25,7 +25,7 @@ view: date_comparison {
   }
 
   dimension: selected_comparison {
-    view_label: "Date Comparison"
+    view_label: "Date Comparison 📅"
     sql: {% if comparison_type._parameter_value == "year" %}
     ${this_year_vs_last_year}
     {% elsif comparison_type._parameter_value == "week" %}
@@ -36,7 +36,7 @@ view: date_comparison {
   }
 
   dimension: this_year_vs_last_year {
-    view_label: "Date Comparison"
+    view_label: "Date Comparison 📅"
     type: string
     sql: CASE
       WHEN {% condition date_comparison_filter %} ${transaction_raw} {% endcondition %} THEN 'This Year'
@@ -45,7 +45,7 @@ view: date_comparison {
   }
 
   dimension: this_week_vs_last_week {
-    view_label: "Date Comparison"
+    view_label: "Date Comparison 📅"
     type: string
     sql: CASE
       WHEN {% condition date_comparison_filter %} ${transaction_raw} {% endcondition %} THEN 'This Week'

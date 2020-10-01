@@ -75,7 +75,7 @@ view: transactions__line_items_core {
   ##### DATE COMPARISON MEASURES #####
 
   measure: sales_change {
-    view_label: "Date Comparison"
+    view_label: "Date Comparison 📅"
     label: "Sales Change (%)"
     type: number
     sql: SUM(CASE WHEN ${transactions.selected_comparison} LIKE 'This%' THEN ${transactions__line_items.sale_price} ELSE NULL END) / NULLIF(SUM(CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' THEN ${transactions__line_items.sale_price} ELSE NULL END),0) -1;;
@@ -84,7 +84,7 @@ view: transactions__line_items_core {
   }
 
   measure: sales_trend_past_year {
-    view_label: "Date Comparison"
+    view_label: "Date Comparison 📅"
     label: "Spend Trend in Past Year"
     type: number
     sql: SUM(CASE WHEN ${transactions.transaction_raw} >= TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -6 MONTH)) AND ${transactions.transaction_raw} < CURRENT_TIMESTAMP() THEN ${sale_price} ELSE NULL END)
@@ -115,7 +115,7 @@ view: transactions__line_items_core {
 
   measure: number_of_addresses {
     hidden: yes
-    view_label: "Customers"
+    view_label: "Customers 👥"
     type: count_distinct
     sql: ${customers.address};;
     value_format_name: decimal_0
@@ -123,7 +123,7 @@ view: transactions__line_items_core {
   }
 
   measure: number_of_customers_per_address {
-    view_label: "Customers"
+    view_label: "Customers 👥"
     type: number
     sql: ${transactions.number_of_customers}/NULLIF(${number_of_addresses},0) ;;
     value_format_name: decimal_0
