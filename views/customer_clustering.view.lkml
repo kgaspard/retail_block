@@ -81,7 +81,6 @@ view: customer_clustering_prediction {
   dimension: customer_segment {
     type: string
     sql: ${TABLE}.customer_segment ;;
-    order_by_field: centroid_id
     link: {
       url: "/dashboards/retail_block_model::customer_segment_deepdive?Customer%20Segment={{value | encode_uri}}&Date%20Range={{ _filters['transactions.date_comparison_filter'] | url_encode }}"
       label: "Drill into {{rendered_value}}"

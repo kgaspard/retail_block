@@ -7,6 +7,7 @@ include: "/views/**/*.view" # include all the views
 # include: "/dashboards/*.dashboard.lookml" # include all the dashboards
 include: "/dashboards/group_overview.dashboard.lookml"
 include: "/dashboards/customer_segment_deepdive.dashboard.lookml"
+include: "/dashboards/store_deepdive.dashboard.lookml"
 
 # Include from Config project:
 include: "//@{CONFIG_PROJECT_NAME}/views/*.view"
@@ -67,6 +68,12 @@ explore: transactions_core {
     relationship: many_to_one
   }
 
+  join: store_tiering {
+    type: left_outer
+    sql_on: ${transactions.store_id} = ${store_tiering.store_id} ;;
+    relationship: many_to_one
+  }
+
   join: channels {
     type: left_outer
     view_label: "Transactions"
@@ -105,24 +112,24 @@ explore: transactions_core {
   {% endif %};;
 }
 
-# explore: stock_forecasting_explore_base {
-#   label: "(2) Stock Forecasting 🏭"
+explore: stock_forecasting_explore_base {
+  label: "(2) Stock Forecasting 🏭"
 
-#   always_filter: {
-#     filters: {
-#       field: transaction_week_filter
-#       value: "last 12 weeks"
-#     }
-#   }
+  always_filter: {
+    filters: {
+      field: transaction_week_filter
+      value: "last 12 weeks"
+    }
+  }
 
-#   join: stock_forecasting_prediction {
-#     relationship: one_to_one
-#     type: full_outer
-#     sql_on: ${stock_forecasting_explore_base.transaction_week_of_year_for_join} = ${stock_forecasting_prediction.transaction_week_of_year}
-#           AND ${stock_forecasting_explore_base.store_id_for_join} = ${stock_forecasting_prediction.store_id}
-#           AND ${stock_forecasting_explore_base.product_name_for_join} = ${stock_forecasting_prediction.product_name};;
-#   }
-# }
+  join: stock_forecasting_prediction {
+    relationship: one_to_one
+    type: full_outer
+    sql_on: ${stock_forecasting_explore_base.transaction_week_of_year_for_join} = ${stock_forecasting_prediction.transaction_week_of_year}
+          AND ${stock_forecasting_explore_base.store_id_for_join} = ${stock_forecasting_prediction.store_id}
+          AND ${stock_forecasting_explore_base.product_name_for_join} = ${stock_forecasting_prediction.product_name};;
+  }
+}
 
 # explore: order_purchase_affinity {
 #   label: "(3) Item Affinity 🔗"

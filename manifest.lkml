@@ -17,6 +17,12 @@ constant: SCHEMA_NAME {
   export: override_required
 }
 
+constant: WEATHER_SCHEMA_NAME {
+  # value: "bigquery-public-data.ghcn_d"
+  value: "rich-tome-273419.eu_weather"
+  export: override_required
+}
+
 constant: TRANSACTIONS_TABLE_NAME {
   # value: "transactions"
   value: "CM_SA_FAC_TICKET_Part*"
@@ -57,6 +63,10 @@ local_dependency: {
 
   override_constant: SCHEMA_NAME {
     value: "@{SCHEMA_NAME}"
+  }
+
+  override_constant: WEATHER_SCHEMA_NAME {
+    value: "@{WEATHER_SCHEMA_NAME}"
   }
 
   override_constant: TRANSACTIONS_TABLE_NAME {

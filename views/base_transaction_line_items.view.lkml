@@ -18,6 +18,11 @@ view: transactions__line_items_core {
     sql: ${TABLE}.sale_price ;;
   }
 
+  dimension: quantity {
+    type: number
+    sql: ${TABLE}.quantity ;;
+  }
+
   dimension: cost_of_goods_sold {
     type: number
     sql: ${TABLE}.cost_of_goods_sold ;;
@@ -48,7 +53,7 @@ view: transactions__line_items_core {
 
   measure: total_quantity {
     type: sum
-    sql: 1 ;;
+    sql: ${quantity} ;;
     value_format_name: decimal_0
     drill_fields: [transactions.drill_detail*]
   }

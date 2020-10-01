@@ -3,7 +3,7 @@ view: store_weather_stores_base {
     explore_source: transactions {
       column: id { field: stores.id }
       column: latitude { field: stores.latitude }
-      column: latitude { field: stores.longitude }
+      column: longitude { field: stores.longitude }
       filters: {
         field: transactions.transaction_date
         value: "2 years"
@@ -19,13 +19,13 @@ view: store_weather {
     partition_keys: ["date"]
     cluster_keys: ["store_id"]
     # requires ID, latitude, longitude columns in stores table
-      # TO DO: update DATE_ADD(,+1 YEAR) with 2020 table once available in BQ public dataset
-    sql: WITH weather_raw AS (SELECT id,date,element,value,mflag,qflag,sflag,time FROM `bigquery-public-data.ghcn_d.ghcnd_2020`
-        UNION ALL SELECT id,date,element,value,mflag,qflag,sflag,time FROM `bigquery-public-data.ghcn_d.ghcnd_2019`
-        UNION ALL SELECT id,date,element,value,mflag,qflag,sflag,time FROM `bigquery-public-data.ghcn_d.ghcnd_2018`
-        UNION ALL SELECT id,date,element,value,mflag,qflag,sflag,time FROM `bigquery-public-data.ghcn_d.ghcnd_2017`
-        UNION ALL SELECT id,date,element,value,mflag,qflag,sflag,time FROM `bigquery-public-data.ghcn_d.ghcnd_2016`
-        UNION ALL SELECT id,date,element,value,mflag,qflag,sflag,time FROM `bigquery-public-data.ghcn_d.ghcnd_2015`),
+      # TO DO: add 2021 table once available in BQ public dataset
+    sql: , weather_raw AS (SELECT id,date,element,value,mflag,qflag,sflag,time FROM `@{WEATHER_SCHEMA_NAME}.ghcnd_2020`
+        UNION ALL SELECT id,date,element,value,mflag,qflag,sflag,time FROM `@{WEATHER_SCHEMA_NAME}.ghcnd_2019`
+        UNION ALL SELECT id,date,element,value,mflag,qflag,sflag,time FROM `@{WEATHER_SCHEMA_NAME}.ghcnd_2018`
+        UNION ALL SELECT id,date,element,value,mflag,qflag,sflag,time FROM `@{WEATHER_SCHEMA_NAME}.ghcnd_2017`
+        UNION ALL SELECT id,date,element,value,mflag,qflag,sflag,time FROM `@{WEATHER_SCHEMA_NAME}.ghcnd_2016`
+        UNION ALL SELECT id,date,element,value,mflag,qflag,sflag,time FROM `@{WEATHER_SCHEMA_NAME}.ghcnd_2015`),
         weather_pivoted AS
         (SELECT date,id
         ,AVG(CASE WHEN element="TMAX" THEN value ELSE NULL END) AS TMAX
@@ -107,7 +107,7 @@ view: store_weather {
         ,stations.id AS station_id
         ,ST_DISTANCE(ST_GEOGPOINT(stores.longitude,stores.latitude),ST_GEOGPOINT(stations.longitude,stations.latitude)) as dist
         FROM ${store_weather_stores_base.SQL_TABLE_NAME} stores
-        CROSS JOIN `bigquery-public-data.ghcn_d.ghcnd_stations` stations)
+        CROSS JOIN `@{WEATHER_SCHEMA_NAME}.ghcnd_stations` stations)
         SELECT distances.store_id
           ,weather_pivoted.date
           ,AVG(distances.dist/1000) AS average_distance_to_weather_stations_km

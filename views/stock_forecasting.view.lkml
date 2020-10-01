@@ -6,10 +6,8 @@ view: stock_forecasting_explore_base {
       column: transaction_week_of_year {}
       column: product_name { field: products.name }
       column: product_image { field: products.product_image }
-      column: department { field: products.department }
       column: category { field: products.category }
       column: brand { field: products.brand }
-      column: area { field: products.area }
       column: store_id { field: stores.id }
       column: store_name { field: stores.name }
       column: number_of_customers {}
@@ -57,16 +55,10 @@ view: stock_forecasting_explore_base {
     view_label: "Product Detail 📦"
     html: <img src="https://us-central1-looker-retail-demo-1.cloudfunctions.net/imageSearch?q={{value | encode_uri }}" style="height: 50px; max-width: 150px;" /> ;;
   }
-  dimension: department {
-    view_label: "Product Detail 📦"
-  }
   dimension: category {
     view_label: "Product Detail 📦"
   }
   dimension: brand {
-    view_label: "Product Detail 📦"
-  }
-  dimension: area {
     view_label: "Product Detail 📦"
   }
   dimension: store_id {

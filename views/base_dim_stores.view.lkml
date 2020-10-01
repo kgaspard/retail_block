@@ -6,7 +6,7 @@ view: stores {
 
 view: stores_core {
   label: "Stores 🏪"
-  sql_table_name: @{SCHEMA_NAME}.@{STORES_TABLE_NAME} ;;
+  sql_table_name: `@{SCHEMA_NAME}.@{STORES_TABLE_NAME}` ;;
 
   dimension: id {
     type: string
@@ -33,7 +33,7 @@ view: stores_core {
     type: string
     sql: ${TABLE}.NAME ;;
     link: {
-      url: "/dashboards/WQKf302aPo8IEFvc2EkSQP?Date={{ _filters['transactions.date_comparison_filter'] | url_encode }}&Store={{value | encode_uri}}"
+      url: "/dashboards/retail_block_model::store_deepdive?Date={{ _filters['transactions.date_comparison_filter'] | url_encode }}&Store={{value | encode_uri}}"
       label: "Drill down into {{rendered_value}}"
     }
   }
@@ -58,7 +58,8 @@ view: stores_core {
     group_label: "Store Comparison"
     sql: CASE
       WHEN {% condition store_for_comparison %} ${name} {% endcondition %} THEN CONCAT('1- ',${name})
-      ELSE ${name}
+      WHEN ${store_tiering.tier_id} = (SELECT tier_id FROM ${store_tiering.SQL_TABLE_NAME} WHERE {% condition store_for_comparison %} store_name {% endcondition %} LIMIT 1) THEN ${name}
+      ELSE NULL
     END;;
   }
 
@@ -67,7 +68,8 @@ view: stores_core {
     group_label: "Store Comparison"
     sql: CASE
       WHEN {% condition store_for_comparison %} ${name} {% endcondition %} THEN CONCAT('1- ',${name})
-      ELSE ${name}
+      WHEN ${store_tiering.tier_id} = (SELECT tier_id FROM ${store_tiering.SQL_TABLE_NAME} WHERE {% condition store_for_comparison %} store_name {% endcondition %} LIMIT 1) THEN ${name}
+      ELSE NULL
     END;;
     html: {{rendered_value}}{% if store_weather.average_daily_precipitation._value < 2.0 %} - 🌞{% elsif store_weather.average_daily_precipitation._value < 4.0 %} - ☁️{% elsif store_weather.average_daily_precipitation._value > 4.0 %} - 🌧️️{% else %}{% endif %};;
     action: {
@@ -93,7 +95,8 @@ view: stores_core {
     group_label: "Store Comparison"
     sql: CASE
       WHEN {% condition store_for_comparison %} ${name} {% endcondition %} THEN CONCAT('1- ',${name})
-      ELSE '2- Rest of Stores in Tier'
+      WHEN ${store_tiering.tier_id} = (SELECT tier_id FROM ${store_tiering.SQL_TABLE_NAME} WHERE {% condition store_for_comparison %} store_name {% endcondition %} LIMIT 1) THEN  '2- Rest of Stores in Tier'
+      ELSE NULL
     END;;
   }
 }

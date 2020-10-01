@@ -1,52 +1,8 @@
 - dashboard: customer_segment_deepdive
   title: Customer Segment Deep-dive
   layout: newspaper
+  preferred_viewer: dashboards
   elements:
-  - title: Customer Coverage
-    name: Customer Coverage
-    model: retail_block_model
-    explore: transactions
-    type: looker_map
-    fields: [customers.location, transactions__line_items.total_sales]
-    filters:
-      transactions.transaction_date: 12 months
-      customers.country: USA
-      customers.location_bin_level: '9'
-      customers.location: inside box from 55.7765730186677, -157.50000000000003 to
-        21.94304553343818, -45
-    sorts: [transactions__line_items.total_sales desc]
-    limit: 5000
-    column_limit: 50
-    map_plot_mode: automagic_heatmap
-    heatmap_gridlines: false
-    heatmap_gridlines_empty: false
-    heatmap_opacity: 0.5
-    show_region_field: true
-    draw_map_labels_above_data: true
-    map_tile_provider: dark
-    map_position: custom
-    map_latitude: 37.96152331396614
-    map_longitude: -96.7236328125
-    map_zoom: 4
-    map_scale_indicator: 'off'
-    map_pannable: true
-    map_zoomable: true
-    map_marker_type: circle
-    map_marker_icon_name: default
-    map_marker_radius_mode: proportional_value
-    map_marker_units: meters
-    map_marker_proportional_scale_type: linear
-    map_marker_color_mode: fixed
-    show_view_names: false
-    show_legend: true
-    quantize_map_value_colors: false
-    reverse_map_value_colors: false
-    listen:
-      Customer Segment: customer_clustering_prediction.customer_segment
-    row: 2
-    col: 0
-    width: 12
-    height: 8
   - title: Sales
     name: Sales
     model: retail_block_model
@@ -230,6 +186,63 @@
     col: 18
     width: 6
     height: 6
+  - name: " (2)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: |-
+      **Recommended Action ?**
+      These are our previously loyal customers in our segment, who have dropped off over the past year. Click the button on the right to create a campaign segment in Salesforce to prepare an email campaign for the CRM manager.
+    row: 10
+    col: 0
+    width: 3
+    height: 8
+  - title: Customers for Reactivation Campaign
+    name: Customers for Reactivation Campaign
+    model: retail_block_model
+    explore: transactions
+    type: looker_grid
+    fields: [customer_facts.customer_id, customer_facts.customer_spend_trend_past_year]
+    filters:
+      transactions.transaction_date: 12 months
+      customer_facts.customer_spend_trend_past_year: "[-1, -0.1]"
+    sorts: [customer_facts.customer_spend_trend_past_year]
+    limit: 500
+    query_timezone: America/Los_Angeles
+    show_view_names: false
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: '12'
+    rows_font_size: '12'
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    show_totals: true
+    show_row_totals: true
+    series_cell_visualizations:
+      customer_facts.customer_spend_trend_past_year:
+        is_active: true
+        palette:
+          palette_id: 50d44102-be13-bd23-eed2-8000589f3610
+          collection_id: f14810d2-98d7-42df-82d0-bc185a074e42
+          custom_colors:
+          - "#ab2824"
+          - "#ffffff"
+    series_types: {}
+    defaults_version: 1
+    listen:
+      Customer Segment: customer_clustering_prediction.customer_segment
+    row: 10
+    col: 3
+    width: 15
+    height: 8
   - title: Potential Value from 10% Reactivation
     name: Potential Value from 10% Reactivation
     model: retail_block_model
@@ -238,7 +251,7 @@
     fields: [transactions__line_items.total_sales]
     filters:
       transactions.transaction_date: 12 months
-      customer_facts.customer_spend_trend_past_year: "<-0.1"
+      customer_facts.customer_spend_trend_past_year: "[-1, -0.1]"
     limit: 5000
     column_limit: 50
     dynamic_fields: [{table_calculation: reactivation_threshold, label: Reactivation
@@ -247,7 +260,6 @@
         label: Potential Value, expression: "${transactions__line_items.total_sales}*${reactivation_threshold}",
         value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number}]
     custom_color_enabled: true
-    custom_color: "#49c244"
     show_single_value_title: true
     show_comparison: false
     comparison_type: value
@@ -256,6 +268,7 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    custom_color: "#49c244"
     show_view_names: false
     show_row_numbers: true
     transpose: false
@@ -304,66 +317,57 @@
     reverse_map_value_colors: false
     series_types: {}
     hidden_fields: [reactivation_threshold, transactions__line_items.total_sales]
+    defaults_version: 1
     listen:
       Customer Segment: customer_clustering_prediction.customer_segment
     row: 10
     col: 18
     width: 6
     height: 2
-  - name: " (2)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: |-
-      **Recommended Action ?**
-      These are our previously loyal customers in our segment, who have dropped off over the past year. Click the button on the right to create a campaign segment in Salesforce to prepare an email campaign for the CRM manager.
-    row: 10
-    col: 0
-    width: 3
-    height: 8
-  - title: Customers for Reactivation Campaign
-    name: Customers for Reactivation Campaign
+  - title: Customer Coverage - Favorite Store
+    name: Customer Coverage - Favorite Store
     model: retail_block_model
     explore: transactions
-    type: looker_grid
-    fields: [customer_facts.customer_id, customer_facts.customer_spend_trend_past_year,
-      customers.email, customers.gender, customers.age, customers.postcode]
+    type: looker_map
+    fields: [transactions__line_items.total_sales, customer_favorite_store_details.location,
+      customer_favorite_store_details.name]
     filters:
       transactions.transaction_date: 12 months
-      customer_facts.customer_spend_trend_past_year: "<-0.1"
-    sorts: [customer_facts.customer_spend_trend_past_year]
+    sorts: [transactions__line_items.total_sales desc]
     limit: 500
-    query_timezone: America/Los_Angeles
-    show_totals: true
-    show_row_totals: true
+    column_limit: 50
+    map_plot_mode: points
+    heatmap_gridlines: false
+    heatmap_gridlines_empty: false
+    heatmap_opacity: 0.5
+    show_region_field: true
+    draw_map_labels_above_data: true
+    map_tile_provider: satellite_streets
+    map_position: custom
+    map_scale_indicator: 'off'
+    map_pannable: true
+    map_zoomable: true
+    map_marker_type: circle
+    map_marker_icon_name: default
+    map_marker_radius_mode: proportional_value
+    map_marker_units: pixels
+    map_marker_proportional_scale_type: linear
+    map_marker_color_mode: value
     show_view_names: false
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    size_to_fit: true
-    series_cell_visualizations:
-      customer_facts.customer_spend_trend_past_year:
-        is_active: true
-        palette:
-          palette_id: 50d44102-be13-bd23-eed2-8000589f3610
-          collection_id: f14810d2-98d7-42df-82d0-bc185a074e42
-          custom_colors:
-          - "#ab2824"
-          - "#ffffff"
-    table_theme: white
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    header_text_alignment: left
-    header_font_size: '12'
-    rows_font_size: '12'
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
+    show_legend: true
+    quantize_map_value_colors: false
+    reverse_map_value_colors: false
+    map_latitude: 37.87702138607635
+    map_longitude: 30.16433715820313
+    map_zoom: 2
+    map_marker_radius_min: 3
+    map_marker_radius_max: 10
+    defaults_version: 1
     listen:
       Customer Segment: customer_clustering_prediction.customer_segment
-    row: 10
-    col: 3
-    width: 15
+    row: 2
+    col: 0
+    width: 12
     height: 8
   filters:
   - name: Customer Segment
@@ -372,6 +376,9 @@
     default_value: Emerging Millennials 🥑
     allow_multiple_values: false
     required: true
+    ui_config:
+      type: advanced
+      display: popover
     model: retail_block_model
     explore: transactions
     listens_to_filters: []
@@ -382,3 +389,6 @@
     default_value: 30 days
     allow_multiple_values: true
     required: false
+    ui_config:
+      type: advanced
+      display: popover
