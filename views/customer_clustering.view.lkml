@@ -74,6 +74,7 @@ view: customer_clustering_prediction {
   }
 
   dimension: customer_id {
+    hidden: yes
     sql: ${TABLE}.customer_id ;;
   }
 
@@ -82,7 +83,7 @@ view: customer_clustering_prediction {
     sql: ${TABLE}.customer_segment ;;
     order_by_field: centroid_id
     link: {
-      url: "/dashboards/UXtbRLMDVqH7xFkHKRHvbr?Customer%20Segment={{value | encode_uri}}&Date%20Range={{ _filters['transactions.date_comparison_filter'] | url_encode }}"
+      url: "/dashboards/retail_block_model::customer_segment_deepdive?Customer%20Segment={{value | encode_uri}}&Date%20Range={{ _filters['transactions.date_comparison_filter'] | url_encode }}"
       label: "Drill into {{rendered_value}}"
     }
   }

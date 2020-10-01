@@ -30,7 +30,6 @@ view: transactions__line_items_core {
     sql: ${sale_price} - ${cost_of_goods_sold} ;;
   }
 
-
   ##### MEASURES #####
 
   measure: total_sales {

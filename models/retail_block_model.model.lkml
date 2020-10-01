@@ -6,9 +6,11 @@ include: "/views/**/*.view" # include all the views
 # Dashboard Includes
 # include: "/dashboards/*.dashboard.lookml" # include all the dashboards
 include: "/dashboards/group_overview.dashboard.lookml"
+include: "/dashboards/customer_segment_deepdive.dashboard.lookml"
 
 # Include from Config project:
 include: "//@{CONFIG_PROJECT_NAME}/views/*.view"
+include: "//@{CONFIG_PROJECT_NAME}/additional_views/*.view"
 include: "//@{CONFIG_PROJECT_NAME}/models/retail_block_model_config.explores.lkml"
 
 
@@ -42,6 +44,18 @@ explore: transactions_core {
     sql_on: ${transactions.customer_id} = ${customer_facts.customer_id} ;;
   }
 
+  join: customer_favorite_store {
+    relationship: many_to_one
+    sql_on: ${transactions.customer_id} = ${customer_favorite_store.customer_id} ;;
+  }
+
+  join: customer_favorite_store_details {
+    view_label: "Customers"
+    relationship: many_to_one
+    fields: [customer_favorite_store_details.name,customer_favorite_store_details.location]
+    sql_on: ${customer_facts.customer_favorite_store_id} = ${customer_favorite_store_details.id} ;;
+  }
+
   join: products {
     relationship: many_to_one
     sql_on: ${products.id} = ${transactions__line_items.product_id} ;;
@@ -73,7 +87,6 @@ explore: transactions_core {
   }
 
   join: customer_clustering_prediction {
-    fields: [customer_clustering_prediction.centroid_id,customer_clustering_prediction.customer_segment]
     view_label: "Customers"
     relationship: many_to_one
     sql_on: ${transactions.customer_id} = ${customer_clustering_prediction.customer_id} ;;

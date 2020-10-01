@@ -1,12 +1,45 @@
 include: "//@{CONFIG_PROJECT_NAME}/views/customer_facts.view"
+include: "./base_dim_stores.view"
 
 view: customer_facts {
   extends: [customer_facts_config]
 }
 
+view: customer_store_sales {
+  derived_table: {
+    explore_source: transactions {
+      column: customer_id {}
+      column: store_id {}
+      column: total_sales { field: transactions__line_items.total_sales }
+      filters: {
+        field: transactions.transaction_date
+        value: ""
+      }
+    }
+  }
+}
+
+view: customer_favorite_store {
+  derived_table: {
+    sql: SELECT distinct customer_id
+      , FIRST_VALUE(store_id) OVER (PARTITION BY customer_id order by total_sales DESC) AS favorite_store_id
+      FROM ${customer_store_sales.SQL_TABLE_NAME} ;;
+  }
+  dimension: customer_id {hidden:yes}
+  dimension: favorite_store_id {hidden:yes}
+}
+
+view: customer_favorite_store_details {
+  extends: [stores]
+
+  dimension: location {group_label:"Customer Favorite Store"}
+  dimension: name {group_label: "Customer Favorite Store"}
+}
+
 view: customer_facts_core {
   view_label: "Customers"
   derived_table: {
+    datagroup_trigger: weekly
     explore_source: transactions {
       column: customer_id {}
       column: customer_average_basket_size { field: transactions__line_items.average_basket_size }
@@ -16,6 +49,7 @@ view: customer_facts_core {
       column: customer_lifetime_quantity { field: transactions__line_items.total_quantity }
       column: customer_first_purchase_date { field: transactions.first_transaction }
       column: customer_spend_trend_past_year { field: transactions__line_items.sales_trend_past_year }
+      column: customer_favorite_store_id { field: customer_favorite_store.favorite_store_id }
       filters: {
         field: transactions.transaction_date
         value: ""
@@ -79,5 +113,11 @@ view: customer_facts_core {
     group_label: "Customer Lifetime"
     value_format_name: percent_1
     sql: ${TABLE}.customer_spend_trend_past_year ;;
+  }
+
+  dimension: customer_favorite_store_id {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.customer_favorite_store_id ;;
   }
 }
