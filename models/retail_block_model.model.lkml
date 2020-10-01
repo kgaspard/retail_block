@@ -4,10 +4,7 @@ label: "Retail Application"
 # View Includes
 include: "/views/**/*.view" # include all the views
 # Dashboard Includes
-# include: "/dashboards/*.dashboard.lookml" # include all the dashboards
-include: "/dashboards/group_overview.dashboard.lookml"
-include: "/dashboards/customer_segment_deepdive.dashboard.lookml"
-include: "/dashboards/store_deepdive.dashboard.lookml"
+include: "/dashboards/*.dashboard.lookml" # include all the dashboards
 
 # Include from Config project:
 include: "//@{CONFIG_PROJECT_NAME}/views/*.view"
@@ -133,28 +130,28 @@ explore: stock_forecasting_explore_base {
   }
 }
 
-# explore: order_purchase_affinity {
-#   label: "(3) Item Affinity 🔗"
-#   view_label: "Item Affinity"
+explore: order_purchase_affinity {
+  label: "(3) Item Affinity 🔗"
+  view_label: "Item Affinity"
 
-#   always_filter: {
-#     filters: {
-#       field: affinity_timeframe
-#       value: "last 90 days"
-#     }
-#     filters: {
-#       field: order_items_base.product_level
-#       value: "product"
-#     }
-#   }
+  always_filter: {
+    filters: {
+      field: affinity_timeframe
+      value: "last 90 days"
+    }
+    filters: {
+      field: order_items_base.product_level
+      value: "product"
+    }
+  }
 
-#   join: order_items_base {}
+  join: order_items_base {}
 
-#   join: total_orders {
-#     type: cross
-#     relationship: many_to_one
-#   }
-# }
+  join: total_orders {
+    type: cross
+    relationship: many_to_one
+  }
+}
 
 explore: customer_clustering_prediction {
   hidden: yes

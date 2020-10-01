@@ -1,38 +1,26 @@
 view: order_items_base {
   derived_table: {
-    #### TO DO: Create a transaction-item-level table with the following columns:
-    # -Transaction ID
-    # -Transaction timestamp
-    # -Base-level item ID and name
-    # -ID and name column for each of your hierarchy levels
-    # -[optional] Customer ID, keep as null otherwise
-    # -Transaction gross sale amount
-    # -Transaction margin amount
-    #### If this info is in different tables that you're joining together (e.g. a trx table to a product hierarchy, as in the example below), you may want to persist the joined table as a PDT if feasible
-    #### Make sure to not change the "AS [...]" in the query below, as these column names are used later on
-    sql: SELECT
-      transactions.transaction_id
-      ,transactions.transaction_timestamp AS order_created_time
-      ,products.name as product_id
-      ,products.name AS product_name
-      ,products.brand AS brand_id
-      ,products.brand AS brand_name
-      ,products.category AS category_id
-      ,products.category AS category_name
-      ,transactions.customer_id AS user_id
-      ,line_items.sale_price AS sale_amt
-      ,line_items.gross_margin AS margin_amt
-    FROM ${transactions.SQL_TABLE_NAME}  AS transactions
-    LEFT JOIN UNNEST(transactions.line_items) line_items
-    LEFT JOIN ${products.SQL_TABLE_NAME}  AS products
-      ON products.ID = line_items.product_id
-    LEFT JOIN ${stores.SQL_TABLE_NAME}  AS stores
-      ON stores.ID = transactions.store_id
-    WHERE 1=1
-      AND {% condition order_purchase_affinity.affinity_timeframe %} transactions.transaction_timestamp {% endcondition %}
-      AND {% condition order_purchase_affinity.store_name %} stores.name {% endcondition %};;
-    #### Uncomment the following line if you'd like to persist this table for faster query-time performance
-#     datagroup_trigger: daily
+    explore_source: transactions {
+      column: transaction_id {}
+      column: order_created_time { field: transactions.transaction_raw }
+      column: product_id { field: products.name }
+      derived_column: product_name { sql: product_id ;; }
+      column: brand_id { field: products.brand }
+      derived_column: brand_name { sql: brand_id ;; }
+      column: category_id { field: products.category }
+      derived_column: category_name { sql: category_id ;; }
+      column: user_id {field: transactions.customer_id }
+      column: sale_amt { field: transactions__line_items.sale_price }
+      column: margin_amt { field: transactions__line_items.gross_margin }
+      bind_filters: {
+        from_field: order_purchase_affinity.affinity_timeframe
+        to_field:  transactions.date_comparison_filter
+      }
+      bind_filters: {
+        from_field: order_purchase_affinity.store_name
+        to_field:  stores.name
+      }
+    }
   }
 
   #### TO DO: Edit the values of this parameter according to the hierarchy levels used in the base table above

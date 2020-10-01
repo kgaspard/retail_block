@@ -37,9 +37,9 @@
       Customer Segment: customer_clustering_prediction.customer_segment
       Date Range: transactions.date_comparison_filter
     row: 2
-    col: 12
+    col: 0
     width: 6
-    height: 4
+    height: 2
   - title: Transactions
     name: Transactions
     model: retail_block_model
@@ -74,9 +74,9 @@
       Customer Segment: customer_clustering_prediction.customer_segment
       Date Range: transactions.date_comparison_filter
     row: 2
-    col: 18
+    col: 6
     width: 6
-    height: 4
+    height: 2
   - title: Basket Size
     name: Basket Size
     model: retail_block_model
@@ -110,10 +110,10 @@
     listen:
       Customer Segment: customer_clustering_prediction.customer_segment
       Date Range: transactions.date_comparison_filter
-    row: 6
+    row: 2
     col: 12
     width: 6
-    height: 4
+    height: 2
   - title: Quantity
     name: Quantity
     model: retail_block_model
@@ -147,10 +147,10 @@
     listen:
       Customer Segment: customer_clustering_prediction.customer_segment
       Date Range: transactions.date_comparison_filter
-    row: 6
+    row: 2
     col: 18
     width: 6
-    height: 4
+    height: 2
   - title: Customer Segment
     name: Customer Segment
     model: retail_block_model
@@ -175,7 +175,7 @@
       <div><img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/83/Salesforce_logo.svg/1200px-Salesforce_logo.svg.png" height="150"></div>
       <div><a href="https://looker-retail-demo-1.appspot.com/api/exportToSalesforce" target="_blank"><button style="color:white; padding: 10px 20px; background-color: #0088bd; border: none; font-size: 16px;">Create campaign segment</button></a></div>
       </div>
-    row: 12
+    row: 14
     col: 18
     width: 6
     height: 6
@@ -186,7 +186,7 @@
     body_text: |-
       **Recommended Action ?**
       These are our previously loyal customers in our segment, who have dropped off over the past year. Click the button on the right to create a campaign segment in Salesforce to prepare an email campaign for the CRM manager.
-    row: 10
+    row: 12
     col: 0
     width: 3
     height: 8
@@ -232,7 +232,7 @@
     defaults_version: 1
     listen:
       Customer Segment: customer_clustering_prediction.customer_segment
-    row: 10
+    row: 12
     col: 3
     width: 15
     height: 8
@@ -313,7 +313,7 @@
     defaults_version: 1
     listen:
       Customer Segment: customer_clustering_prediction.customer_segment
-    row: 10
+    row: 12
     col: 18
     width: 6
     height: 2
@@ -324,8 +324,7 @@
     type: looker_map
     fields: [transactions__line_items.total_sales, customer_favorite_store_details.location,
       customer_favorite_store_details.name]
-    filters:
-      transactions.date_comparison_filter: 12 months
+    filters: {}
     sorts: [transactions__line_items.total_sales desc]
     limit: 500
     column_limit: 50
@@ -358,15 +357,71 @@
     defaults_version: 1
     listen:
       Customer Segment: customer_clustering_prediction.customer_segment
-    row: 2
+      Date Range: transactions.date_comparison_filter
+    row: 4
     col: 0
+    width: 12
+    height: 8
+  - title: Customer Journey
+    name: Customer Journey
+    model: retail_block_model
+    explore: transactions
+    type: marketplace_viz_sankey::sankey-marketplace
+    fields: [customer_transaction_sequence.main_product_category_transaction_1, customer_transaction_sequence.main_product_category_transaction_2,
+      customer_transaction_sequence.main_product_category_transaction_3, customer_transaction_sequence.main_product_category_transaction_4,
+      customer_transaction_sequence.main_product_category_transaction_5, transactions.number_of_transactions]
+    filters: {}
+    sorts: [transactions.number_of_transactions desc]
+    limit: 500
+    column_limit: 50
+    hidden_fields: []
+    hidden_points_if_no: []
+    series_labels: {}
+    show_view_names: false
+    color_range: ["#dd3333", "#80ce5d", "#f78131", "#369dc1", "#c572d3", "#36c1b3",
+      "#b57052", "#ed69af"]
+    label_type: name
+    show_null_points: false
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 0
+    series_types: {}
+    listen:
+      Customer Segment: customer_clustering_prediction.customer_segment
+      Date Range: transactions.date_comparison_filter
+    row: 4
+    col: 12
     width: 12
     height: 8
   filters:
   - name: Customer Segment
     title: Customer Segment
     type: field_filter
-    default_value: Emerging Millennials 🥑
+    default_value: New Joiners
     allow_multiple_values: false
     required: true
     ui_config:
