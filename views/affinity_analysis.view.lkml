@@ -1,3 +1,5 @@
+include: "//@{CONFIG_PROJECT_NAME}/derived_views/affinity_analysis.view"
+
 view: order_items_base {
   derived_table: {
     explore_source: transactions {
@@ -158,6 +160,10 @@ view: total_orders {
 }
 
 view: order_purchase_affinity {
+  extends: [order_purchase_affinity_config]
+}
+
+view: order_purchase_affinity_core {
   derived_table: {
     sql: SELECT product_a
             , product_b

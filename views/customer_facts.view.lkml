@@ -1,4 +1,4 @@
-include: "//@{CONFIG_PROJECT_NAME}/views/customer_facts.view"
+include: "//@{CONFIG_PROJECT_NAME}/derived_views/customer_facts.view"
 include: "./base_dim_stores.view"
 
 view: customer_facts {

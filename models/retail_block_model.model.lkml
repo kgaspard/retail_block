@@ -126,6 +126,11 @@ explore: transactions_core {
 }
 
 explore: stock_forecasting_explore_base {
+  extends: [stock_forecasting_explore_base_config]
+}
+
+explore: stock_forecasting_explore_base_core {
+  extension: required
   label: "(2) Stock Forecasting 🏭"
 
   always_filter: {
@@ -145,6 +150,11 @@ explore: stock_forecasting_explore_base {
 }
 
 explore: order_purchase_affinity {
+  extends: [order_purchase_affinity_config]
+}
+
+explore: order_purchase_affinity_core {
+  extension: required
   label: "(3) Item Affinity 🔗"
   view_label: "Item Affinity"
 
@@ -168,6 +178,11 @@ explore: order_purchase_affinity {
 }
 
 explore: customer_clustering_prediction {
+  extends: [customer_clustering_prediction_config]
+}
+
+explore: customer_clustering_prediction_core {
+  extension: required
   hidden: yes
   label: "(4) Customer Segments 👤"
   fields: [customer_clustering_prediction.customer_segment_basic_dim]

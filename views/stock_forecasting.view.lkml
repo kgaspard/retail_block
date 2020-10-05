@@ -1,4 +1,10 @@
+include: "//@{CONFIG_PROJECT_NAME}/derived_views/stock_forecasting.view"
+
 view: stock_forecasting_explore_base {
+  extends: [stock_forecasting_explore_base_config]
+}
+
+view: stock_forecasting_explore_base_core {
   view_label: "Stock Forecasting 🏭"
   derived_table: {
     explore_source: transactions {

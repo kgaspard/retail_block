@@ -1,5 +1,4 @@
-# If necessary, uncomment the line below to include explore_source.
-# include: "../models/retail_block_model.model.lkml"
+include: "//@{CONFIG_PROJECT_NAME}/derived_views/customer_clustering.view"
 include: "./customer_facts.view"
 
 view: customer_clustering_input {
@@ -35,6 +34,9 @@ view: customer_clustering_prediction_base {
 }
 
 view: customer_clustering_prediction {
+  extends: [customer_clustering_prediction_config]
+}
+view: customer_clustering_prediction_core {
   derived_table: {
     datagroup_trigger: monthly
     sql: WITH customer_clustering_prediction_aggregates AS (SELECT

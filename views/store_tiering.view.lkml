@@ -1,3 +1,5 @@
+include: "//@{CONFIG_PROJECT_NAME}/derived_views/store_tiering.view"
+
 view: store_tiering_base {
   derived_table: {
     explore_source: transactions {
@@ -13,6 +15,9 @@ view: store_tiering_base {
 }
 
 view: store_tiering {
+  extends: [store_tiering_config]
+}
+view: store_tiering_core {
   label: "Stores 🏪"
   derived_table: {
     datagroup_trigger: monthly
