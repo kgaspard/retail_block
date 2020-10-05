@@ -56,6 +56,12 @@ constant: CONFIG_PROJECT_NAME {
   export: override_required
 }
 
+constant: MAIN_CURRENCY_SYMBOL {
+  # value: "$"
+  value: "€"
+  export: override_required
+}
+
 ################ Dependencies ################
 
 local_dependency: {
@@ -87,5 +93,9 @@ local_dependency: {
 
   override_constant: STORES_TABLE_NAME {
     value: "@{STORES_TABLE_NAME}"
+  }
+
+  override_constant: MAIN_CURRENCY_SYMBOL {
+    value: "@{MAIN_CURRENCY_SYMBOL}"
   }
 }
