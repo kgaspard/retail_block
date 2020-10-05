@@ -56,6 +56,12 @@ constant: CONFIG_PROJECT_NAME {
   export: override_required
 }
 
+constant: COMPANY_LOGO {
+  # value: "https://i.imgur.com/DwmnjA2.png"
+  value: "https://www.logodatabases.com/wp-content/uploads/2019/02/Sephora-the-flame-symbol.jpg"
+  export: override_required
+}
+
 constant: MAIN_CURRENCY_SYMBOL {
   # value: "$"
   value: "€"
@@ -93,6 +99,10 @@ local_dependency: {
 
   override_constant: STORES_TABLE_NAME {
     value: "@{STORES_TABLE_NAME}"
+  }
+
+  override_constant: COMPANY_LOGO {
+    value: "@{COMPANY_LOGO}"
   }
 
   override_constant: MAIN_CURRENCY_SYMBOL {

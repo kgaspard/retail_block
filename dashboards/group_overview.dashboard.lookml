@@ -20,7 +20,7 @@
     dynamic_fields: [{table_calculation: vs_ly, label: vs LY, expression: "${transactions__line_items.total_sales}/offset(${transactions__line_items.total_sales},1)-1",
         value_format: !!null '', value_format_name: percent_1, _kind_hint: measure,
         _type_hint: number}, {table_calculation: target, label: Target, expression: 'round(${transactions__line_items.total_sales}*1.1/1000,0)*1000',
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number}]
+        value_format: !!null '', value_format_name: currency_0, _kind_hint: measure, _type_hint: number}]
     custom_color_enabled: true
     custom_color: "#5A30C2"
     show_single_value_title: true

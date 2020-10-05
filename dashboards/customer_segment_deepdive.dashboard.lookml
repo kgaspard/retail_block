@@ -251,7 +251,7 @@
           Threshold, expression: '0.1', value_format: !!null '', value_format_name: !!null '',
         _kind_hint: dimension, _type_hint: number}, {table_calculation: potential_value,
         label: Potential Value, expression: "${transactions__line_items.total_sales}*${reactivation_threshold}",
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number}]
+        value_format: !!null '', value_format_name: currency_0, _kind_hint: measure, _type_hint: number}]
     custom_color_enabled: true
     show_single_value_title: true
     show_comparison: false

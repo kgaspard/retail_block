@@ -140,14 +140,14 @@ view: stock_forecasting_explore_base {
   measure: total_sales {
     type: sum
     sql: ${sales} ;;
-    value_format_name: usd_0
+    value_format_name: currency_0
     drill_fields: [drill_detail*]
   }
 
   measure: total_gross_margin {
     type: sum
     sql: ${gross_margin} ;;
-    value_format_name: usd_0
+    value_format_name: currency_0
     drill_fields: [drill_detail*]
   }
 
@@ -162,14 +162,14 @@ view: stock_forecasting_explore_base {
   measure: average_basket_size {
     type: number
     sql: ${total_sales}/NULLIF(${total_number_of_transactions},0) ;;
-    value_format_name: usd
+    value_format_name: currency
     drill_fields: [drill_detail*]
   }
 
   measure: average_item_price {
     type: number
     sql: ${total_sales}/NULLIF(${total_quantity},0) ;;
-    value_format_name: usd
+    value_format_name: currency
     drill_fields: [transactions.drill_detail*]
   }
 
@@ -182,7 +182,7 @@ view: stock_forecasting_explore_base {
   measure: stock_difference_value {
     type: number
     sql: ${stock_difference}*${average_item_price} ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 }
 

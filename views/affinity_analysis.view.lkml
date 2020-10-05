@@ -423,7 +423,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Sales"
     type: number
     sql: ${TABLE}.product_a_product_sales ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_a_total_basket_sales {
@@ -431,7 +431,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Sales"
     type: number
     sql: ${TABLE}.product_a_basket_sales ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_a_total_rest_of_basket_sales {
@@ -439,7 +439,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Sales"
     type: number
     sql: ${product_a_total_basket_sales}-IFNULL(${product_a_total_sales},0) ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_b_total_sales {
@@ -447,7 +447,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Sales"
     type: number
     sql: ${TABLE}.product_b_product_sales ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_b_total_basket_sales {
@@ -455,7 +455,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Sales"
     type: number
     sql: ${TABLE}.product_b_basket_sales ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_b_total_rest_of_basket_sales {
@@ -463,7 +463,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Sales"
     type: number
     sql: ${product_b_total_basket_sales}-IFNULL(${product_b_total_sales},0) ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   # Margin Metrics - Totals
@@ -473,7 +473,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Margin"
     type: number
     sql: ${TABLE}.product_a_product_margin ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_a_total_basket_margin {
@@ -481,7 +481,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Margin"
     type: number
     sql: ${TABLE}.product_a_basket_margin ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_a_total_rest_of_basket_margin {
@@ -489,7 +489,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Margin"
     type: number
     sql: ${product_a_total_basket_margin}-IFNULL(${product_a_total_margin},0) ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_b_total_margin {
@@ -497,7 +497,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Margin"
     type: number
     sql: ${TABLE}.product_b_product_margin ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_b_total_basket_margin {
@@ -505,7 +505,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Margin"
     type: number
     sql: ${TABLE}.product_b_basket_margin ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_b_total_rest_of_basket_margin {
@@ -513,7 +513,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Margin"
     type: number
     sql: ${product_b_total_basket_margin}-IFNULL(${product_b_total_margin},0) ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   # Sales Metrics - Average
@@ -523,7 +523,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Sales"
     type: number
     sql: 1.0*${product_a_total_sales}/${product_a_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_a_average_basket_sales {
@@ -531,7 +531,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Sales"
     type: number
     sql: 1.0*${product_a_total_basket_sales}/${product_a_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_a_average_rest_of_basket_sales {
@@ -539,7 +539,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Sales"
     type: number
     sql: 1.0*${product_a_total_rest_of_basket_sales}/${product_a_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_b_average_sales {
@@ -547,7 +547,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Sales"
     type: number
     sql: 1.0*${product_b_total_sales}/${product_b_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_b_average_basket_sales {
@@ -555,7 +555,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Sales"
     type: number
     sql: 1.0*${product_b_total_basket_sales}/${product_b_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_b_average_rest_of_basket_sales {
@@ -563,7 +563,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Sales"
     type: number
     sql: 1.0*${product_b_total_rest_of_basket_sales}/${product_b_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   # Margin Metrics - Average
@@ -573,7 +573,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Margin"
     type: number
     sql: 1.0*${product_a_total_margin}/${product_a_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_a_average_basket_margin {
@@ -581,7 +581,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Margin"
     type: number
     sql: 1.0*${product_a_total_basket_margin}/${product_a_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
     drill_fields: [product_a, product_a_percent_purchased_alone, product_a_percent_customer_exclusivity]
   }
 
@@ -590,7 +590,7 @@ view: order_purchase_affinity {
     group_label: "Product A - Margin"
     type: number
     sql: 1.0*${product_a_total_rest_of_basket_margin}/${product_a_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
     drill_fields: [product_a, product_a_percent_purchased_alone, product_a_percent_customer_exclusivity]
   }
 
@@ -599,7 +599,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Margin"
     type: number
     sql: 1.0*${product_b_total_margin}/${product_b_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
   }
 
   dimension: product_b_average_basket_margin {
@@ -607,7 +607,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Margin"
     type: number
     sql: 1.0*${product_b_total_basket_margin}/${product_b_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
     drill_fields: [product_b, product_b_percent_purchased_alone, product_b_percent_customer_exclusivity]
   }
 
@@ -616,7 +616,7 @@ view: order_purchase_affinity {
     group_label: "Product B - Margin"
     type: number
     sql: 1.0*${product_b_total_rest_of_basket_margin}/${product_b_order_count} ;;
-    value_format_name: usd
+    value_format_name: currency
     drill_fields: [product_b, product_b_percent_purchased_alone, product_b_percent_customer_exclusivity]
   }
 

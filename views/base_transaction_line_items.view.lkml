@@ -40,35 +40,35 @@ view: transactions__line_items_core {
   measure: total_sales {
     type: sum
     sql: ${sale_price} ;;
-    value_format_name: usd_0
+    value_format_name: currency_k
     drill_fields: [transactions.drill_detail*]
   }
 
   measure: total_gross_margin {
     type: sum
     sql: ${gross_margin} ;;
-    value_format_name: usd_0
+    value_format_name: currency_k
     drill_fields: [transactions.drill_detail*]
   }
 
   measure: total_quantity {
     type: sum
     sql: ${quantity} ;;
-    value_format_name: decimal_0
+    value_format_name: unit_k
     drill_fields: [transactions.drill_detail*]
   }
 
   measure: average_basket_size {
     type: number
     sql: ${total_sales}/NULLIF(${transactions.number_of_transactions},0) ;;
-    value_format_name: usd
+    value_format_name: currency
     drill_fields: [transactions.drill_detail*]
   }
 
   measure: average_item_price {
     type: number
     sql: ${total_sales}/NULLIF(${total_quantity},0) ;;
-    value_format_name: usd
+    value_format_name: currency
     drill_fields: [transactions.drill_detail*]
   }
 
@@ -99,7 +99,7 @@ view: transactions__line_items_core {
     view_label: "Stores 🏪"
     type: number
     sql: ${total_sales}/NULLIF(${transactions.number_of_stores},0) ;;
-    value_format_name: usd_0
+    value_format_name: currency_0
     drill_fields: [transactions.drill_detail*]
   }
 

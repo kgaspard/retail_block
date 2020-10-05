@@ -75,14 +75,14 @@ view: transactions_core {
   measure: number_of_transactions {
     type: count_distinct
     sql: ${transactions.transaction_id} ;;
-    value_format_name: decimal_0
+    value_format_name: unit_k
     drill_fields: [drill_detail*]
   }
 
   measure: number_of_customers {
     type: count_distinct
     sql: ${transactions.customer_id} ;;
-    value_format_name: decimal_0
+    value_format_name: unit_k
     drill_fields: [drill_detail*]
   }
 

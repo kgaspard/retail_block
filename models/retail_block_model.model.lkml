@@ -16,10 +16,13 @@ named_value_format: currency_k {
   value_format: "\"@{MAIN_CURRENCY_SYMBOL}\"#,##0.0,\" K\""
 }
 named_value_format: currency {
-  value_format: "\"@{MAIN_CURRENCY_SYMBOL}\"0.00"
+  value_format: "\"@{MAIN_CURRENCY_SYMBOL}\"#,##0.00"
 }
 named_value_format: currency_0 {
-  value_format: "\"@{MAIN_CURRENCY_SYMBOL}\"0"
+  value_format: "\"@{MAIN_CURRENCY_SYMBOL}\"#,##0"
+}
+named_value_format: unit_k {
+  value_format: "#,##0.0,\" K\""
 }
 
 # Explores:

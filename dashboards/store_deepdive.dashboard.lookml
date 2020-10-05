@@ -20,7 +20,7 @@
     dynamic_fields: [{table_calculation: vs_ly, label: vs LY, expression: "${transactions__line_items.total_sales}/offset(${transactions__line_items.total_sales},1)-1",
         value_format: !!null '', value_format_name: percent_1, _kind_hint: measure,
         _type_hint: number}, {table_calculation: target, label: Target, expression: 'round(${transactions__line_items.total_sales}*1.1/10000,0)*10000',
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number}]
+        value_format: !!null '', value_format_name: currency_0, _kind_hint: measure, _type_hint: number}]
     custom_color_enabled: true
     custom_color: "#5A30C2"
     show_single_value_title: true
@@ -835,7 +835,7 @@
     limit: 500
     dynamic_fields: [{table_calculation: missing_stock_value, label: Missing Stock
           Value, expression: 'sum(${stock_forecasting_explore_base.stock_difference_value})',
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number}]
+        value_format: !!null '', value_format_name: currency_0, _kind_hint: measure, _type_hint: number}]
     query_timezone: America/Los_Angeles
     custom_color_enabled: true
     show_single_value_title: true
@@ -895,7 +895,7 @@
     limit: 500
     dynamic_fields: [{table_calculation: missing_stock_value, label: Missing Stock
           Value, expression: 'sum(${stock_forecasting_explore_base.stock_difference_value})',
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number}]
+        value_format: !!null '', value_format_name: currency_0, _kind_hint: measure, _type_hint: number}]
     query_timezone: America/Los_Angeles
     custom_color_enabled: true
     show_single_value_title: true

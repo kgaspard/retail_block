@@ -460,12 +460,12 @@
     column_limit: 50
     dynamic_fields: [{dimension: margin_uplift_from_promotion, label: Margin Uplift
           from Promotion, expression: "(${order_purchase_affinity.product_a_total_margin}+${order_purchase_affinity.product_b_total_basket_margin})*${assumed_promotion_uptake}*(${order_purchase_affinity.lift})",
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: dimension,
+        value_format: !!null '', value_format_name: currency_0, _kind_hint: dimension,
         _type_hint: number}, {dimension: assumed_promotion_uptake, label: Assumed
           Promotion Uptake, expression: '0.1', value_format: !!null '', value_format_name: percent_1,
         _kind_hint: dimension, _type_hint: number}, {table_calculation: margin_uplift_from_top_5_promotions,
         label: Margin Uplift from Top 5 Promotions, expression: 'sum(if(row()<=5,${margin_uplift_from_promotion},null))',
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: dimension,
+        value_format: !!null '', value_format_name: currency_0, _kind_hint: dimension,
         _type_hint: number}]
     query_timezone: America/Los_Angeles
     custom_color_enabled: true
