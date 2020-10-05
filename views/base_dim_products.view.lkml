@@ -29,7 +29,7 @@ view: products_core {
     link: {
       label: "{{value}} Item Dynamics"
       icon_url: "https://i.imgur.com/W4tVGrj.png"
-      url: "/dashboards/Ipxk660N88jaUxsHolxRts?Focus%20Category={{value | encode_uri}}&Minimum%20Purchase%20Frequency="
+      url: "/dashboards/retail_block_model::item_affinity_analysis?Focus%20Category={{value | encode_uri}}&Minimum%20Purchase%20Frequency="
     }
   }
 
@@ -40,7 +40,7 @@ view: products_core {
     link: {
       label: "Drive attachments for {{rendered_value}}"
       icon_url: "https://i.imgur.com/W4tVGrj.png"
-      url: "/dashboards/Ipxk660N88jaUxsHolxRts?Focus%20Product={{value | encode_uri}}&Minimum%20Purchase%20Frequency="
+      url: "/dashboards/retail_block_model::item_affinity_analysis?Focus%20Product={{value | encode_uri}}&Minimum%20Purchase%20Frequency="
     }
   }
 
@@ -49,7 +49,7 @@ view: products_core {
   dimension: product_image {
     type: string
     sql: ${name} ;;
-    html: <img src="https://us-central1-looker-retail-demo-1.cloudfunctions.net/imageSearch?q={{value | encode_uri }}" style="height: 50px; max-width: 150px;" /> ;;
+    html: <img src="@{IMAGE_SEARCH_URL}{{value | encode_uri }}" style="height: 50px; max-width: 150px;" /> ;;
   }
 
   ##### MEASURES #####

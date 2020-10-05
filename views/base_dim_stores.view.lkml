@@ -85,7 +85,7 @@ view: stores_core {
         type: textarea
         label: "Message"
         required: yes
-        default: "Hi, can you please check out what's going on in {{rendered_value}}? /dashboards/WQKf302aPo8IEFvc2EkSQP?Store={{value | encode_uri}}"
+        default: "Hi, can you please check out what's going on in {{rendered_value}}? /dashboards/retail_block_model::store_deepdive?Store={{value | encode_uri}}"
       }
     }
   }

@@ -20,7 +20,7 @@ view: customers_core {
     sql: ${TABLE}.address ;;
     group_label: "Address Info"
     link: {
-      url: "/dashboards/ya1knzVmVzuw8UHoe4VqVt?Address=%22{{value | encode_uri}}%22&Date%20Range={{ _filters['transactions.transaction_date']}}"
+      url: "/dashboards/retail_block_model::address_deepdive?Address=%22{{value | encode_uri}}%22&Date%20Range={{ _filters['transactions.transaction_date']}}"
       label: "Drill into this address"
       icon_url: "https://img.icons8.com/cotton/2x/worldwide-location.png"
     }

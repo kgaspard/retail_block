@@ -56,15 +56,15 @@ constant: CONFIG_PROJECT_NAME {
   export: override_required
 }
 
-constant: COMPANY_LOGO {
-  # value: "https://i.imgur.com/DwmnjA2.png"
-  value: "https://www.logodatabases.com/wp-content/uploads/2019/02/Sephora-the-flame-symbol.jpg"
-  export: override_required
-}
-
 constant: MAIN_CURRENCY_SYMBOL {
   # value: "$"
   value: "€"
+  export: override_required
+}
+
+constant: IMAGE_SEARCH_URL {
+  # value: "https://us-central1-looker-retail-demo-1.cloudfunctions.net/imageSearch?q="
+  value: "https://us-central1-looker-private-demo.cloudfunctions.net/imageSearch?q="
   export: override_required
 }
 
@@ -101,11 +101,11 @@ local_dependency: {
     value: "@{STORES_TABLE_NAME}"
   }
 
-  override_constant: COMPANY_LOGO {
-    value: "@{COMPANY_LOGO}"
-  }
-
   override_constant: MAIN_CURRENCY_SYMBOL {
     value: "@{MAIN_CURRENCY_SYMBOL}"
+  }
+
+  override_constant: IMAGE_SEARCH_URL {
+    value: "@{IMAGE_SEARCH_URL}"
   }
 }

@@ -23,7 +23,6 @@ view: order_items_base {
     }
   }
 
-  #### TO DO: Edit the values of this parameter according to the hierarchy levels used in the base table above
   parameter: product_level {
     view_label: "Item Affinity"
     type: unquoted
@@ -206,8 +205,6 @@ view: order_purchase_affinity {
     type: date
   }
 
-  #### TO DO: [optional] add any store or other level filters here, or remove this one
-
   filter: store_name {
     type: string
     suggest_explore: transactions
@@ -222,8 +219,7 @@ view: order_purchase_affinity {
     sql: ${TABLE}.product_a ;;
     link: {
       label: "Focus on {{rendered_value}}"
-      #### TO DO: Replace "/3" with id of the [...] dashboards
-      url: "/dashboards/Ipxk660N88jaUxsHolxRts?Focus%20Product={{ value | encode_uri }}&Product%20Level={{ _filters['order_items_base.product_level'] | url_encode }}&Analysis%20Timeframe={{ _filters['order_purchase_affinity.affinity_timeframe'] | url_encode }}&Store%20Name={{ _filters['order_purchase_affinity.store_name'] | url_encode }}&Focus%20Category={{ _filters['order_purchase_affinity.product_a_category'] | url_encode }}&Minimum%20Purchase%20Frequency={{ _filters['order_purchase_affinity.product_a_order_frequency'] | url_encode }}"
+      url: "/dashboards/retail_block_model::item_affinity_analysis?Focus%20Product={{ value | encode_uri }}&Product%20Level={{ _filters['order_items_base.product_level'] | url_encode }}&Analysis%20Timeframe={{ _filters['order_purchase_affinity.affinity_timeframe'] | url_encode }}&Store%20Name={{ _filters['order_purchase_affinity.store_name'] | url_encode }}&Focus%20Category={{ _filters['order_purchase_affinity.product_a_category'] | url_encode }}&Minimum%20Purchase%20Frequency={{ _filters['order_purchase_affinity.product_a_order_frequency'] | url_encode }}"
     }
   }
 
@@ -231,7 +227,7 @@ view: order_purchase_affinity {
     group_label: "Product A"
     type: string
     sql: ${product_a} ;;
-    html: <img src="https://us-central1-looker-retail-demo-1.cloudfunctions.net/imageSearch?q={{rendered_value | encode_uri }}" style="height: 100px; max-width: 150px;" /> ;;
+    html: <img src="@{IMAGE_SEARCH_URL}{{rendered_value | encode_uri }}" style="height: 100px; max-width: 150px;" /> ;;
   }
 
   dimension: product_b {
@@ -244,7 +240,7 @@ view: order_purchase_affinity {
     group_label: "Product B"
     type: string
     sql: ${product_b} ;;
-    html: <img src="https://us-central1-looker-retail-demo-1.cloudfunctions.net/imageSearch?q={{rendered_value | encode_uri }}" style="height: 100px; max-width: 150px;" /> ;;
+    html: <img src="@{IMAGE_SEARCH_URL}{{rendered_value | encode_uri }}" style="height: 100px; max-width: 150px;" /> ;;
   }
 
   dimension: product_a_category {
