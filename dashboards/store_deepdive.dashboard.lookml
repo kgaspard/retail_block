@@ -411,7 +411,7 @@
     model: retail_block_model
     explore: transactions
     type: looker_line
-    fields: [store_weather.average_max_temparature, transactions.transaction_date,
+    fields: [store_weather.average_max_temperature, transactions.transaction_date,
       transactions__line_items.total_sales_per_store]
     fill_fields: [transactions.transaction_date]
     filters:
@@ -430,7 +430,7 @@
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
-    y_axes: [{label: '', orientation: left, series: [{axisId: store_weather.average_max_temparature,
+    y_axes: [{label: '', orientation: left, series: [{axisId: store_weather.average_max_temperature,
             id: store_weather.average_max_temparature, name: Average Max Temparature}],
         showLabels: true, showValues: true, unpinAxis: false, tickDensity: default,
         type: linear}, {label: '', orientation: right, series: [{axisId: transactions__line_items.total_sales_per_store,
@@ -456,10 +456,10 @@
     point_style: circle
     series_colors:
       1- Los Angeles - transactions__line_items.total_sales_per_store: "#1F1142"
-      2- Rest of Stores in Tier - store_weather.average_max_temparature: "#5A30C2"
+      2- Rest of Stores in Tier - store_weather.average_max_temperature: "#5A30C2"
       2- Rest of Stores in Tier - transactions__line_items.total_sales_per_store: "#1F1142"
       transactions__line_items.total_sales_per_store: "#1F1142"
-      store_weather.average_max_temparature: "#9d81e6"
+      store_weather.average_max_temperature: "#9d81e6"
     show_value_labels: false
     label_density: 25
     x_axis_scale: auto
@@ -535,7 +535,7 @@
     model: retail_block_model
     explore: transactions
     type: looker_line
-    fields: [store_weather.average_max_temparature, transactions.transaction_date,
+    fields: [store_weather.average_max_temperature, transactions.transaction_date,
       transactions__line_items.total_sales_per_store]
     fill_fields: [transactions.transaction_date]
     filters:
@@ -554,7 +554,7 @@
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
-    y_axes: [{label: '', orientation: left, series: [{axisId: store_weather.average_max_temparature,
+    y_axes: [{label: '', orientation: left, series: [{axisId: store_weather.average_max_temperature,
             id: store_weather.average_max_temparature, name: Average Max Temparature}],
         showLabels: true, showValues: true, unpinAxis: false, tickDensity: default,
         type: linear}, {label: '', orientation: right, series: [{axisId: transactions__line_items.total_sales_per_store,
@@ -580,9 +580,9 @@
     point_style: circle
     series_colors:
       1- Los Angeles - transactions__line_items.total_sales_per_store: "#1F1142"
-      2- Rest of Stores in Tier - store_weather.average_max_temparature: "#5A30C2"
+      2- Rest of Stores in Tier - store_weather.average_max_temperature: "#5A30C2"
       2- Rest of Stores in Tier - transactions__line_items.total_sales_per_store: "#1F1142"
-      store_weather.average_max_temparature: "#9d81e6"
+      store_weather.average_max_temperature: "#9d81e6"
       transactions__line_items.total_sales_per_store: "#1F1142"
     show_value_labels: false
     label_density: 25

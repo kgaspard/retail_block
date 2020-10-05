@@ -670,13 +670,13 @@ view: store_weather {
 
   ##### MEASURES #####
 
-  measure: average_max_temparature {
+  measure: average_max_temperature {
     type: average
     sql: ${tmax} ;;
     value_format: "#,##0.0 \" °C\""
   }
 
-  measure: average_min_temparature {
+  measure: average_min_temperature {
     type: average
     sql: ${tmin} ;;
     value_format: "#,##0.0 \" °C\""

@@ -186,196 +186,79 @@ view: stock_forecasting_explore_base {
   }
 }
 
-view: stock_forecasting_product_store_week_facts {
-  derived_table: {
-    explore_source: transactions {
-      column: transaction_week_of_year {}
-      column: id { field: stores.id }
-      column: name { field: products.name }
-      column: category { field: products.category }
-      column: total_quantity { field: transactions__line_items.total_quantity }
-#       column: store_size_grouping { field: stores.store_size_grouping }
-#       column: sq_ft { field: stores.sq_ft }
-      filters: {
-        field: transactions.transaction_date
-        value: "1 years ago for 1 years"
-      }
-    }
-  }
-  dimension: transaction_week_of_year {}
-  dimension: id {}
-  dimension: name {}
-  dimension: category {}
-  dimension: total_quantity {}
-#   dimension: store_size_grouping {}
-#   dimension: sq_ft {}
-}
-
-view: stock_forecasting_product_store_week_facts_prior_year {
-  derived_table: {
-    explore_source: transactions {
-      column: transaction_week_of_year {}
-      column: id { field: stores.id }
-      column: name { field: products.name }
-      column: total_quantity { field: transactions__line_items.total_quantity }
-      column: average_basket_size { field: transactions__line_items.average_basket_size }
-      column: average_item_price { field: transactions__line_items.average_item_price }
-      column: total_sales { field: transactions__line_items.total_sales }
-      column: total_gross_margin { field: transactions__line_items.total_gross_margin }
-      column: percent_customer_transactions {}
-      column: number_of_transactions {}
-      column: number_of_customers {}
-      filters: {
-        field: transactions.transaction_date
-        value: "2 years ago for 1 years"
-      }
-    }
-  }
-  dimension: transaction_week_of_year {}
-  dimension: id {}
-  dimension: name {}
-  dimension: total_quantity {}
-  dimension: average_basket_size {}
-  dimension: average_item_price {}
-  dimension: total_sales {}
-  dimension: total_gross_margin {}
-  dimension: percent_customer_transactions {}
-  dimension: number_of_transactions {}
-  dimension: number_of_customers {}
-}
-
-view: stock_forecasting_store_week_facts_prior_year {
-  derived_table: {
-    explore_source: transactions {
-      column: transaction_week_of_year {}
-      column: id { field: stores.id }
-      column: name { field: products.name }
-      column: total_quantity { field: transactions__line_items.total_quantity }
-      column: average_basket_size { field: transactions__line_items.average_basket_size }
-      column: average_item_price { field: transactions__line_items.average_item_price }
-#       column: average_daily_precipitation { field: store_weather.average_daily_precipitation }
-#       column: average_max_temparature { field: store_weather.average_max_temparature }
-#       column: average_min_temparature { field: store_weather.average_min_temparature }
-      column: total_sales { field: transactions__line_items.total_sales }
-      column: total_gross_margin { field: transactions__line_items.total_gross_margin }
-      column: percent_customer_transactions {}
-      column: number_of_transactions {}
-      column: number_of_customers {}
-      filters: {
-        field: transactions.transaction_date
-        value: "2 years ago for 1 years"
-      }
-    }
-  }
-  dimension: transaction_week_of_year {}
-  dimension: id {}
-  dimension: name {}
-  dimension: total_quantity {}
-  dimension: average_basket_size {}
-  dimension: average_item_price {}
-#   dimension: average_daily_precipitation {}
-#   dimension: average_max_temparature {}
-#   dimension: average_min_temparature {}
-  dimension: total_sales {}
-  dimension: total_gross_margin {}
-  dimension: percent_customer_transactions {}
-  dimension: number_of_transactions {}
-  dimension: number_of_customers {}
-}
-
-view: stock_forecasting_category_week_facts_prior_year {
-  derived_table: {
-    explore_source: transactions {
-      column: transaction_week_of_year {}
-      column: category { field: products.category }
-      column: total_quantity { field: transactions__line_items.total_quantity }
-      column: average_basket_size { field: transactions__line_items.average_basket_size }
-      column: average_item_price { field: transactions__line_items.average_item_price }
-      column: total_sales { field: transactions__line_items.total_sales }
-      column: total_gross_margin { field: transactions__line_items.total_gross_margin }
-      column: percent_customer_transactions {}
-      column: number_of_transactions {}
-      column: number_of_customers {}
-      filters: {
-        field: transactions.transaction_date
-        value: "2 years ago for 1 years"
-      }
-    }
-  }
-  dimension: transaction_week_of_year {}
-  dimension: category {}
-  dimension: total_quantity {}
-  dimension: average_basket_size {}
-  dimension: average_item_price {}
-  dimension: total_sales {}
-  dimension: total_gross_margin {}
-  dimension: percent_customer_transactions {}
-  dimension: number_of_transactions {}
-  dimension: number_of_customers {}
-}
-
-explore: stock_forecasting_product_store_week_facts {
-  hidden: yes
-  join: stock_forecasting_product_store_week_facts_prior_year {
-    relationship: one_to_one
-    sql_on: ${stock_forecasting_product_store_week_facts.transaction_week_of_year} = ${stock_forecasting_product_store_week_facts_prior_year.transaction_week_of_year}
-    AND ${stock_forecasting_product_store_week_facts.id} = ${stock_forecasting_product_store_week_facts_prior_year.id}
-    AND ${stock_forecasting_product_store_week_facts.name} = ${stock_forecasting_product_store_week_facts_prior_year.name};;
-  }
-  join: stock_forecasting_store_week_facts_prior_year {
-    relationship: many_to_one
-    sql_on: ${stock_forecasting_product_store_week_facts.transaction_week_of_year} = ${stock_forecasting_store_week_facts_prior_year.transaction_week_of_year}
-          AND ${stock_forecasting_product_store_week_facts.id} = ${stock_forecasting_store_week_facts_prior_year.id};;
-  }
-  join: stock_forecasting_category_week_facts_prior_year {
-    relationship: many_to_one
-    sql_on: ${stock_forecasting_product_store_week_facts.transaction_week_of_year} = ${stock_forecasting_category_week_facts_prior_year.transaction_week_of_year}
-      AND ${stock_forecasting_product_store_week_facts.category} = ${stock_forecasting_category_week_facts_prior_year.category};;
-  }
-}
-
 ###########################################################################################
 ###################################  BEGIN BQML MODEL  ####################################
 ###########################################################################################
 
+view: stock_forecasting_input_base {
+  derived_table: {
+    explore_source: transactions {
+      column: transaction_week_of_year {}
+      column: transaction_timestamp_date {field: transactions.transaction_date}
+      derived_column: transaction_date {sql: CAST(transaction_timestamp_date AS DATE) ;;}
+      column: store_id { }
+      column: product_name { field:products.name }
+      column: product_category {field:products.category}
+      column: store_tier_id { field: store_tiering.tier_id }
+      column: average_basket_size { field: transactions__line_items.average_basket_size }
+      column: average_item_price { field: transactions__line_items.average_item_price }
+      column: number_of_customers {}
+      column: number_of_transactions {}
+      column: percent_customer_transactions {}
+      column: total_gross_margin { field: transactions__line_items.total_gross_margin }
+      column: total_quantity { field: transactions__line_items.total_quantity }
+      column: total_sales { field: transactions__line_items.total_sales }
+      column: average_daily_precipitation { field: store_weather.average_daily_precipitation }
+      column: average_max_temperature { field: store_weather.average_max_temperature }
+      column: average_min_temperature { field: store_weather.average_min_temperature }
+      filters: {
+        field: transactions.date_comparison_filter
+        value: "2 years ago for 2 years"
+      }
+    }
+  }
+}
+
 view: stock_forecasting_input {
   derived_table: {
-    explore_source: stock_forecasting_product_store_week_facts {
-      column: transaction_week_of_year {}
-      column: store_id { field: stock_forecasting_product_store_week_facts.id}
-      column: product_name { field: stock_forecasting_product_store_week_facts.name }
-      column: category {}
-#       column: sq_ft {}
-#       column: store_size_grouping {}
-      column: total_quantity {}
-      column: stock_forecasting_category_week_facts_prior_year__average_basket_size { field: stock_forecasting_category_week_facts_prior_year.average_basket_size }
-      column: stock_forecasting_category_week_facts_prior_year__average_item_price { field: stock_forecasting_category_week_facts_prior_year.average_item_price }
-      column: stock_forecasting_category_week_facts_prior_year__number_of_customers { field: stock_forecasting_category_week_facts_prior_year.number_of_customers }
-      column: stock_forecasting_category_week_facts_prior_year__number_of_transactions { field: stock_forecasting_category_week_facts_prior_year.number_of_transactions }
-      column: stock_forecasting_category_week_facts_prior_year__percent_customer_transactions { field: stock_forecasting_category_week_facts_prior_year.percent_customer_transactions }
-      column: stock_forecasting_category_week_facts_prior_year__total_gross_margin { field: stock_forecasting_category_week_facts_prior_year.total_gross_margin }
-      column: stock_forecasting_category_week_facts_prior_year__total_quantity { field: stock_forecasting_category_week_facts_prior_year.total_quantity }
-      column: stock_forecasting_category_week_facts_prior_year__total_sales { field: stock_forecasting_category_week_facts_prior_year.total_sales }
-      column: stock_forecasting_product_store_week_facts_prior_year__average_basket_size { field: stock_forecasting_product_store_week_facts_prior_year.average_basket_size }
-      column: stock_forecasting_product_store_week_facts_prior_year__average_item_price { field: stock_forecasting_product_store_week_facts_prior_year.average_item_price }
-      column: stock_forecasting_product_store_week_facts_prior_year__number_of_customers { field: stock_forecasting_product_store_week_facts_prior_year.number_of_customers }
-      column: stock_forecasting_product_store_week_facts_prior_year__number_of_transactions { field: stock_forecasting_product_store_week_facts_prior_year.number_of_transactions }
-      column: stock_forecasting_product_store_week_facts_prior_year__percent_customer_transactions { field: stock_forecasting_product_store_week_facts_prior_year.percent_customer_transactions }
-      column: stock_forecasting_product_store_week_facts_prior_year__total_gross_margin { field: stock_forecasting_product_store_week_facts_prior_year.total_gross_margin }
-      column: stock_forecasting_product_store_week_facts_prior_year__total_quantity { field: stock_forecasting_product_store_week_facts_prior_year.total_quantity }
-      column: stock_forecasting_product_store_week_facts_prior_year__total_sales { field: stock_forecasting_product_store_week_facts_prior_year.total_sales }
-      column: stock_forecasting_store_week_facts_prior_year__average_basket_size { field: stock_forecasting_store_week_facts_prior_year.average_basket_size }
-#       column: stock_forecasting_store_week_facts_prior_year__average_daily_precipitation { field: stock_forecasting_store_week_facts_prior_year.average_daily_precipitation }
-      column: stock_forecasting_store_week_facts_prior_year__average_item_price { field: stock_forecasting_store_week_facts_prior_year.average_item_price }
-#       column: stock_forecasting_store_week_facts_prior_year__average_max_temparature { field: stock_forecasting_store_week_facts_prior_year.average_max_temparature }
-#       column: stock_forecasting_store_week_facts_prior_year__average_min_temparature { field: stock_forecasting_store_week_facts_prior_year.average_min_temparature }
-      column: stock_forecasting_store_week_facts_prior_year__number_of_customers { field: stock_forecasting_store_week_facts_prior_year.number_of_customers }
-      column: stock_forecasting_store_week_facts_prior_year__number_of_transactions { field: stock_forecasting_store_week_facts_prior_year.number_of_transactions }
-      column: stock_forecasting_store_week_facts_prior_year__percent_customer_transactions { field: stock_forecasting_store_week_facts_prior_year.percent_customer_transactions }
-      column: stock_forecasting_store_week_facts_prior_year__total_gross_margin { field: stock_forecasting_store_week_facts_prior_year.total_gross_margin }
-      column: stock_forecasting_store_week_facts_prior_year__total_quantity { field: stock_forecasting_store_week_facts_prior_year.total_quantity }
-      column: stock_forecasting_store_week_facts_prior_year__total_sales { field: stock_forecasting_store_week_facts_prior_year.total_sales }
-    }
+    sql: SELECT distinct
+          transaction_week_of_year
+          ,store_id
+          ,product_name
+          ,product_category
+          ,store_tier_id
+          ,SUM(CASE WHEN transaction_date >= DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN total_quantity END) OVER(PARTITION BY transaction_week_of_year,store_id,product_name) AS total_quantity
+          -- Product-Store-Week prior year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN average_basket_size END) OVER(PARTITION BY transaction_week_of_year,store_id,product_name) AS average_basket_size_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN average_item_price END) OVER(PARTITION BY transaction_week_of_year,store_id,product_name) AS average_item_price_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN number_of_customers END) OVER(PARTITION BY transaction_week_of_year,store_id,product_name) AS number_of_customers_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN number_of_transactions END) OVER(PARTITION BY transaction_week_of_year,store_id,product_name) AS number_of_transactions_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN percent_customer_transactions END) OVER(PARTITION BY transaction_week_of_year,store_id,product_name) AS percent_customer_transactions_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN total_gross_margin END) OVER(PARTITION BY transaction_week_of_year,store_id,product_name) AS total_gross_margin_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN total_quantity END) OVER(PARTITION BY transaction_week_of_year,store_id,product_name) AS total_quantity_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN total_sales END) OVER(PARTITION BY transaction_week_of_year,store_id,product_name) AS total_sales_prior_year
+          -- Category-Week prior year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN average_basket_size END) OVER(PARTITION BY transaction_week_of_year,product_category) AS average_basket_size_category_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN average_item_price END) OVER(PARTITION BY transaction_week_of_year,product_category) AS average_item_price_category_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN number_of_customers END) OVER(PARTITION BY transaction_week_of_year,product_category) AS number_of_customers_category_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN number_of_transactions END) OVER(PARTITION BY transaction_week_of_year,product_category) AS number_of_transactions_category_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN percent_customer_transactions END) OVER(PARTITION BY transaction_week_of_year,product_category) AS percent_customer_transactions_category_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN total_gross_margin END) OVER(PARTITION BY transaction_week_of_year,product_category) AS total_gross_margin_category_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN total_quantity END) OVER(PARTITION BY transaction_week_of_year,product_category) AS total_quantity_category_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN total_sales END) OVER(PARTITION BY transaction_week_of_year,product_category) AS total_sales_category_prior_year
+          -- Store-Week prior year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN average_basket_size END) OVER(PARTITION BY transaction_week_of_year,store_id) AS average_basket_size_store_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN average_item_price END) OVER(PARTITION BY transaction_week_of_year,store_id) AS average_item_price_store_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN number_of_customers END) OVER(PARTITION BY transaction_week_of_year,store_id) AS number_of_customers_store_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN number_of_transactions END) OVER(PARTITION BY transaction_week_of_year,store_id) AS number_of_transactions_store_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN percent_customer_transactions END) OVER(PARTITION BY transaction_week_of_year,store_id) AS percent_customer_transactions_store_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN total_gross_margin END) OVER(PARTITION BY transaction_week_of_year,store_id) AS total_gross_margin_store_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN total_quantity END) OVER(PARTITION BY transaction_week_of_year,store_id) AS total_quantity_store_prior_year
+          ,SUM(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN total_sales END) OVER(PARTITION BY transaction_week_of_year,store_id) AS total_sales_store_prior_year
+          ,AVG(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN average_max_temperature END) OVER(PARTITION BY transaction_week_of_year,store_id) AS average_max_temperature_store_prior_year
+          ,AVG(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN average_min_temperature END) OVER(PARTITION BY transaction_week_of_year,store_id) AS average_min_temperature_store_prior_year
+          ,AVG(CASE WHEN transaction_date < DATE_ADD(CURRENT_DATE(),INTERVAL -1 YEAR) THEN average_daily_precipitation END) OVER(PARTITION BY transaction_week_of_year,store_id) AS average_daily_precipitation_store_prior_year
+        FROM ${stock_forecasting_input_base.SQL_TABLE_NAME} ;;
   }
 }
 
@@ -391,7 +274,8 @@ view: stock_forecasting_regression {
         ) AS
       SELECT
          * EXCEPT(transaction_week_of_year, store_id, product_name)
-      FROM ${stock_forecasting_input.SQL_TABLE_NAME};;
+      FROM ${stock_forecasting_input.SQL_TABLE_NAME}
+      WHERE total_quantity is not null ;;
   }
 }
 
@@ -399,7 +283,7 @@ view: stock_forecasting_prediction {
   derived_table: {
     sql: SELECT transaction_week_of_year,store_id,product_name
         ,CONCAT(CAST(transaction_week_of_year AS STRING),'_',CAST(store_id AS STRING),product_name) AS pk
-        ,category
+        ,product_category
         ,predicted_total_quantity
       FROM ml.PREDICT(
       MODEL ${stock_forecasting_regression.SQL_TABLE_NAME},
@@ -432,10 +316,10 @@ view: stock_forecasting_prediction {
     sql: ${TABLE}.product_name ;;
   }
 
-  dimension: category {
+  dimension: product_category {
     hidden: yes
     type: string
-    sql: ${TABLE}.category ;;
+    sql: ${TABLE}.product_category ;;
   }
 
   dimension: predicted_total_quantity {
