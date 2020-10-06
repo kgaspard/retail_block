@@ -6,26 +6,22 @@ project_name: "retail-block"
 ################ Constants ################
 
 constant: CONNECTION_NAME {
-  # value: "retail-block-connection"
-  value: "sephora-poc"
+  value: "retail-block-connection"
   export: override_required
 }
 
 constant: SCHEMA_NAME {
-  # value: "looker-private-demo.retail"
-  value: "rich-tome-273419.sephora_poc"
+  value: "looker-demo.retail"
   export: override_required
 }
 
 constant: WEATHER_SCHEMA_NAME {
-  # value: "bigquery-public-data.ghcn_d"
-  value: "rich-tome-273419.eu_weather"
+  value: "bigquery-public-data.ghcn_d"
   export: override_required
 }
 
 constant: TRANSACTIONS_TABLE_NAME {
-  # value: "transactions"
-  value: "CM_SA_FAC_TICKET_Part*"
+  value: "transactions"
   export: override_required
 }
 
@@ -40,14 +36,12 @@ constant: CUSTOMERS_TABLE_NAME {
 }
 
 constant: PRODUCTS_TABLE_NAME {
-  # value: "dim_products"
-  value: "CM_SA_DIM_MATERIAL"
+  value: "dim_products"
   export: override_required
 }
 
 constant: STORES_TABLE_NAME {
-  # value: "dim_stores"
-  value: "CM_SA_DIM_STORE"
+  value: "dim_stores"
   export: override_required
 }
 
@@ -57,14 +51,12 @@ constant: CONFIG_PROJECT_NAME {
 }
 
 constant: MAIN_CURRENCY_SYMBOL {
-  # value: "$"
-  value: "€"
+  value: "$"
   export: override_required
 }
 
 constant: IMAGE_SEARCH_URL {
-  # value: "https://us-central1-looker-retail-demo-1.cloudfunctions.net/imageSearch?q="
-  value: "https://us-central1-looker-private-demo.cloudfunctions.net/imageSearch?q="
+  value: "https://us-central1-looker-demo.cloudfunctions.net/imageSearch?q="
   export: override_required
 }
 
