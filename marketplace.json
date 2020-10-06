@@ -27,6 +27,7 @@
   "auxiliary_projects": [
     {
       "git_uri": "git://github.com/kgaspard/retail_block_config.git",
+      "git_ref": "5ef75a581cbd92455cf5eb692ab8d18038d8681b",
       "label": "Retail Block Config",
       "constant_name": "config_project_name"
     }
