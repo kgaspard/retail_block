@@ -119,20 +119,56 @@ view: transactions_core {
 
   ##### DATE COMPARISON MEASURES #####
 
+  measure: number_of_transactions_n {
+    view_label: "Date Comparison 📅"
+    label: "Number of Transactions N"
+    type: count_distinct
+    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'This%' THEN ${transaction_id} ELSE NULL END;;
+    value_format_name: currency_k
+    drill_fields: [transactions.drill_detail*]
+  }
+
+  measure: number_of_transactions_n1 {
+    view_label: "Date Comparison 📅"
+    label: "Number of Transactions N-1"
+    type: sum
+    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' THEN ${transaction_id} ELSE NULL END;;
+    value_format_name: currency_k
+    drill_fields: [transactions.drill_detail*]
+  }
+
   measure: number_of_transactions_change {
     view_label: "Date Comparison 📅"
     label: "Number of Transactions Change (%)"
     type: number
-    sql: COUNT(distinct CASE WHEN ${transactions.selected_comparison} LIKE 'This%' THEN ${transaction_id} ELSE NULL END) / NULLIF(COUNT(distinct CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' THEN ${transaction_id} ELSE NULL END),0) -1;;
+    sql: ${number_of_transactions_n} / NULLIF(${number_of_transactions_n1},0) -1;;
     value_format_name: percent_1
     drill_fields: [drill_detail*]
+  }
+
+  measure: number_of_customers_n {
+    view_label: "Date Comparison 📅"
+    label: "Number of Customers N"
+    type: count_distinct
+    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'This%' THEN ${customer_id} ELSE NULL END;;
+    value_format_name: unit_k
+    drill_fields: [transactions.drill_detail*]
+  }
+
+  measure: number_of_customers_n1 {
+    view_label: "Date Comparison 📅"
+    label: "Number of Customers N-1"
+    type: count_distinct
+    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' THEN ${customer_id} ELSE NULL END;;
+    value_format_name: unit_k
+    drill_fields: [transactions.drill_detail*]
   }
 
   measure: number_of_customers_change {
     view_label: "Date Comparison 📅"
     label: "Number of Customers Change (%)"
     type: number
-    sql: COUNT(distinct CASE WHEN ${transactions.selected_comparison} LIKE 'This%' THEN ${customer_id} ELSE NULL END) / NULLIF(COUNT(distinct CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' THEN ${customer_id} ELSE NULL END),0) -1;;
+    sql: ${number_of_customers_n} / NULLIF(${number_of_customers_n1},0) -1;;
     value_format_name: percent_1
     drill_fields: [drill_detail*]
   }

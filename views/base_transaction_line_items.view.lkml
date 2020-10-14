@@ -74,11 +74,29 @@ view: transactions__line_items_core {
 
   ##### DATE COMPARISON MEASURES #####
 
+  measure: sales_n {
+    view_label: "Date Comparison 📅"
+    label: "Sales N"
+    type: sum
+    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'This%' THEN ${sale_price} ELSE NULL END;;
+    value_format_name: currency_k
+    drill_fields: [transactions.drill_detail*]
+  }
+
+  measure: sales_n1 {
+    view_label: "Date Comparison 📅"
+    label: "Sales N-1"
+    type: sum
+    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' THEN ${sale_price} ELSE NULL END;;
+    value_format_name: currency_k
+    drill_fields: [transactions.drill_detail*]
+  }
+
   measure: sales_change {
     view_label: "Date Comparison 📅"
     label: "Sales Change (%)"
     type: number
-    sql: SUM(CASE WHEN ${transactions.selected_comparison} LIKE 'This%' THEN ${transactions__line_items.sale_price} ELSE NULL END) / NULLIF(SUM(CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' THEN ${transactions__line_items.sale_price} ELSE NULL END),0) -1;;
+    sql: ${sales_n} / NULLIF(${sales_n1},0) -1;;
     value_format_name: percent_1
     drill_fields: [transactions.drill_detail*]
   }
@@ -88,7 +106,7 @@ view: transactions__line_items_core {
     label: "Spend Trend in Past Year"
     type: number
     sql: SUM(CASE WHEN ${transactions.transaction_raw} >= TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -6 MONTH)) AND ${transactions.transaction_raw} < CURRENT_TIMESTAMP() THEN ${sale_price} ELSE NULL END)
-          /NULLIF(SUM(CASE WHEN ${transactions.transaction_raw} >= TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -12 MONTH)) AND ${transactions.transaction_raw} < TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -6 MONTH)) THEN ${sale_price} ELSE NULL END),0) -1;;
+      /NULLIF(SUM(CASE WHEN ${transactions.transaction_raw} >= TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -12 MONTH)) AND ${transactions.transaction_raw} < TIMESTAMP(DATE_ADD(CURRENT_DATE(),INTERVAL -6 MONTH)) THEN ${sale_price} ELSE NULL END),0) -1;;
     value_format_name: percent_1
     drill_fields: [transactions.drill_detail*]
   }

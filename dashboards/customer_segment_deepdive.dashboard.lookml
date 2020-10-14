@@ -173,7 +173,7 @@
     body_text: |-
       <div align="center">
       <div><img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/83/Salesforce_logo.svg/1200px-Salesforce_logo.svg.png" height="150"></div>
-      <div><a href="https://looker-retail-demo-1.appspot.com/api/exportToSalesforce" target="_blank"><button style="color:white; padding: 10px 20px; background-color: #0088bd; border: none; font-size: 16px;">Create campaign segment</button></a></div>
+      <div><a href="https://retail-demo-app-idhn2cvrpq-uc.a.run.app/api/exportToSalesforce" target="_blank"><button style="color:white; padding: 10px 20px; background-color: #0088bd; border: none; font-size: 16px;">Create campaign segment</button></a></div>
       </div>
     row: 14
     col: 18
