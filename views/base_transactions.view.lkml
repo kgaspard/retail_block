@@ -24,7 +24,7 @@ view: transactions_core {
 
   dimension: customer_id {
     type: number
-    hidden: yes
+    hidden: no
     sql: ${TABLE}.customer_id ;;
   }
 
@@ -82,6 +82,7 @@ view: transactions_core {
   measure: number_of_customers {
     type: count_distinct
     sql: ${transactions.customer_id} ;;
+    filters: [customers.is_customer: "yes"]
     value_format_name: unit_k
     drill_fields: [drill_detail*]
   }
@@ -150,7 +151,7 @@ view: transactions_core {
     view_label: "Date Comparison 📅"
     label: "Number of Customers N"
     type: count_distinct
-    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'This%' THEN ${customer_id} ELSE NULL END;;
+    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'This%' AND ${customers.is_customer} THEN ${customer_id} ELSE NULL END;;
     value_format_name: unit_k
     drill_fields: [transactions.drill_detail*]
   }
@@ -159,7 +160,7 @@ view: transactions_core {
     view_label: "Date Comparison 📅"
     label: "Number of Customers N-1"
     type: count_distinct
-    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' THEN ${customer_id} ELSE NULL END;;
+    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' AND ${customers.is_customer} THEN ${customer_id} ELSE NULL END;;
     value_format_name: unit_k
     drill_fields: [transactions.drill_detail*]
   }
