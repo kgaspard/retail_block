@@ -25,7 +25,7 @@
     custom_color: "#5A30C2"
     show_single_value_title: true
     show_comparison: true
-    comparison_type: progress_percentage
+    comparison_type: change
     comparison_reverse_colors: false
     show_comparison_label: true
     enable_conditional_formatting: false
@@ -33,7 +33,7 @@
     conditional_formatting_include_nulls: false
     series_types: {}
     hidden_fields: [transactions.number_of_transactions, transactions__line_items.average_basket_size,
-      transactions.percent_customer_transactions, vs_ly]
+      transactions.percent_customer_transactions, target]
     listen:
       Date: transactions.date_comparison_filter
       Store: stores.name
