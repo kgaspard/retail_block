@@ -114,8 +114,8 @@ view: transactions_core {
     type: count_distinct
     sql: ${transaction_id} ;;
     filters: {
-      field: customer_id
-      value: "NOT NULL"
+      field: is_customer
+      value: "yes"
     }
   }
 

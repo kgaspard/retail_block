@@ -11,7 +11,7 @@ view: order_items_base {
       derived_column: brand_name { sql: brand_id ;; }
       column: category_id { field: products.category }
       derived_column: category_name { sql: category_id ;; }
-      column: user_id {field: transactions.customer_id }
+      column: user_id {field: transactions.real_customer_id }
       column: sale_amt { field: transactions__line_items.sale_price }
       column: margin_amt { field: transactions__line_items.gross_margin }
       bind_filters: {

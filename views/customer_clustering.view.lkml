@@ -5,8 +5,7 @@ view: customer_clustering_input {
   derived_table: {
     sql: SELECT *
     ,DATE_DIFF(CURRENT_DATE(),CAST(customer_first_purchase_date AS DATE),MONTH) AS months_customer_tenure
-    FROM ${customer_facts.SQL_TABLE_NAME}
-    WHERE customer_id IS NOT NULL ;;
+    FROM ${customer_facts.SQL_TABLE_NAME} ;;
   }
 }
 

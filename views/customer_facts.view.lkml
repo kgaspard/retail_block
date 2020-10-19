@@ -54,6 +54,10 @@ view: customer_facts_core {
         field: transactions.date_comparison_filter
         value: ""
       }
+      filters: {
+        field: transactions.is_customer
+        value: "yes"
+      }
     }
   }
 
