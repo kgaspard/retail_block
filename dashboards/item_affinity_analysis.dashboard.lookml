@@ -335,7 +335,6 @@
       Product Level: order_items_base.product_level
       Analysis Timeframe: order_purchase_affinity.affinity_timeframe
       Focus Product: order_purchase_affinity.product_a
-      Minimum Purchase Frequency: order_purchase_affinity.product_a_order_frequency
       Focus Category: order_purchase_affinity.product_a_category
     row: 12
     col: 3
