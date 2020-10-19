@@ -108,14 +108,6 @@ view: customers_core {
 
   ##### CUSTOM DIMENSIONS #####
 
-  dimension: is_customer {
-    label: "Is Real Customer"
-    hidden: yes
-    type: yesno
-    sql: ${id} IS NOT NULL ;;
-    # sql: ${id} IS NOT NULL AND ${id} <> '' AND ${id} <> '0' ;;
-  }
-
   dimension: name {
     type: string
     sql: CONCAT(${first_name}, " ", ${last_name}) ;;

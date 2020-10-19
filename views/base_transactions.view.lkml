@@ -11,19 +11,19 @@ view: transactions_core {
 
 
   dimension: transaction_id {
-    type: number
+    type: string
     primary_key: yes
     sql: ${TABLE}.transaction_id ;;
   }
 
   dimension: channel_id {
-    type: number
+    type: string
     hidden: yes
     sql: ${TABLE}.channel_id ;;
   }
 
   dimension: customer_id {
-    type: number
+    type: string
     hidden: no
     sql: ${TABLE}.customer_id ;;
   }
@@ -70,6 +70,20 @@ view: transactions_core {
     sql_end: CURRENT_TIMESTAMP() ;;
   }
 
+  dimension: is_customer {
+    label: "Is Real Customer"
+    hidden: yes
+    type: yesno
+    sql: ${customer_id} IS NOT NULL ;;
+    # sql: ${customer_id} IS NOT NULL AND ${customer_id} <> '' AND ${customer_id} <> '0' ;;
+  }
+
+  dimension: real_customer_id {
+    hidden: yes
+    type: string
+    sql: CASE WHEN ${is_customer} THEN ${customer_id} ELSE NULL END ;;
+  }
+
   ##### MEASURES #####
 
   measure: number_of_transactions {
@@ -82,7 +96,7 @@ view: transactions_core {
   measure: number_of_customers {
     type: count_distinct
     sql: ${transactions.customer_id} ;;
-    filters: [customers.is_customer: "yes"]
+    filters: [is_customer: "yes"]
     value_format_name: unit_k
     drill_fields: [drill_detail*]
   }
@@ -151,7 +165,7 @@ view: transactions_core {
     view_label: "Date Comparison 📅"
     label: "Number of Customers N"
     type: count_distinct
-    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'This%' AND ${customers.is_customer} THEN ${customer_id} ELSE NULL END;;
+    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'This%' AND ${is_customer} THEN ${customer_id} ELSE NULL END;;
     value_format_name: unit_k
     drill_fields: [transactions.drill_detail*]
   }
@@ -160,7 +174,7 @@ view: transactions_core {
     view_label: "Date Comparison 📅"
     label: "Number of Customers N-1"
     type: count_distinct
-    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' AND ${customers.is_customer} THEN ${customer_id} ELSE NULL END;;
+    sql: CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' AND ${is_customer} THEN ${customer_id} ELSE NULL END;;
     value_format_name: unit_k
     drill_fields: [transactions.drill_detail*]
   }

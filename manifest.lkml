@@ -34,17 +34,20 @@ constant: CHANNELS_TABLE_NAME {
 }
 
 constant: CUSTOMERS_TABLE_NAME {
-  value: "dim_customers"
+  # value: "dim_customers"
+  value: "customers"
   export: override_required
 }
 
 constant: PRODUCTS_TABLE_NAME {
-  value: "dim_products"
+  # value: "dim_products"
+  value: "products"
   export: override_required
 }
 
 constant: STORES_TABLE_NAME {
-  value: "dim_stores"
+  # value: "dim_stores"
+  value: "us_stores"
   export: override_required
 }
 
