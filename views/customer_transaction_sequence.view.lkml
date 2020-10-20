@@ -11,6 +11,10 @@ view: customer_transaction_sequence_base {
         from_field: transactions.date_comparison_filter
         to_field: transactions.date_comparison_filter
       }
+      filters: {
+        field: transactions.is_customer
+        value: "yes"
+      }
     }
   }
 }

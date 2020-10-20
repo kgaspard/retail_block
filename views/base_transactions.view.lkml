@@ -139,16 +139,16 @@ view: transactions_core {
     label: "Number of Transactions N"
     type: count_distinct
     sql: CASE WHEN ${transactions.selected_comparison} LIKE 'This%' THEN ${transaction_id} ELSE NULL END;;
-    value_format_name: currency_k
+    value_format_name: unit_k
     drill_fields: [transactions.drill_detail*]
   }
 
   measure: number_of_transactions_n1 {
     view_label: "Date Comparison 📅"
     label: "Number of Transactions N-1"
-    type: sum
+    type: count_distinct
     sql: CASE WHEN ${transactions.selected_comparison} LIKE 'Prior%' THEN ${transaction_id} ELSE NULL END;;
-    value_format_name: currency_k
+    value_format_name: unit_k
     drill_fields: [transactions.drill_detail*]
   }
 

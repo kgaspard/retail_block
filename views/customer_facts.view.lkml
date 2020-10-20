@@ -15,6 +15,10 @@ view: customer_store_sales {
         field: transactions.date_comparison_filter
         value: ""
       }
+      filters: {
+        field: transactions.is_customer
+        value: "yes"
+      }
     }
   }
 }
