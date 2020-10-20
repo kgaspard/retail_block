@@ -6,14 +6,12 @@ project_name: "retail-block"
 ################ Constants ################
 
 constant: CONNECTION_NAME {
-  # value: "retail-block-connection"
-  value: "lookerdata_bigquery_standard_sql"
+  value: "retail-block-connection"
   export: override_required
 }
 
 constant: SCHEMA_NAME {
-  # value: "looker-demo.retail"
-  value: "lookerdata.retail_demo"
+  value: "looker-demo.retail"
   export: override_required
 }
 
@@ -23,8 +21,7 @@ constant: WEATHER_SCHEMA_NAME {
 }
 
 constant: TRANSACTIONS_TABLE_NAME {
-  # value: "transactions"
-  value: "transaction_detail"
+  value: "transactions"
   export: override_required
 }
 
@@ -34,20 +31,17 @@ constant: CHANNELS_TABLE_NAME {
 }
 
 constant: CUSTOMERS_TABLE_NAME {
-  # value: "dim_customers"
-  value: "customers"
+  value: "dim_customers"
   export: override_required
 }
 
 constant: PRODUCTS_TABLE_NAME {
-  # value: "dim_products"
-  value: "products"
+  value: "dim_products"
   export: override_required
 }
 
 constant: STORES_TABLE_NAME {
-  # value: "dim_stores"
-  value: "us_stores"
+  value: "dim_stores"
   export: override_required
 }
 
