@@ -124,7 +124,7 @@ view: customers_core {
     type: string
     group_label: "Address Info"
     sql: ${address} ;;
-    html: <img src="https://maps.googleapis.com/maps/api/streetview?size=700x400&location={{value | encode_uri}}&fov=120&key=AIzaSyD7BvCbKqjStBl7r6AmDu1p8yGF-IxtFLs" ;;
+    html: <img src="https://maps.googleapis.com/maps/api/streetview?size=700x400&location={{value | encode_uri}}&fov=120&key=@{GOOGLE_MAPS_API_KEY}" ;;
   }
 
   filter: address_comparison_filter {
